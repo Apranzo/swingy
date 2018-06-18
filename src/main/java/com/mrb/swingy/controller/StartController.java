@@ -16,4 +16,8 @@ public class StartController {
     public void onCreateHeroButtonPressed(){
         view.openCreateHero();
     }
+
+    public void onSwitchButtonPressed(){
+        view.switchView();
+    }
 }

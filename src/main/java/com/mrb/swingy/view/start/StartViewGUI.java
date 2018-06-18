@@ -14,6 +14,7 @@ public class StartViewGUI extends JFrame implements StartView{
 
     private JLabel windowLabel = new JLabel("Start");
     private JButton createHeroButton = new JButton("Create Hero");
+    private JButton switchViewButton = new JButton("Switch to console");
 
     private StartController controller;
 
@@ -29,6 +30,7 @@ public class StartViewGUI extends JFrame implements StartView{
 
         panel.add(windowLabel);
         panel.add(createHeroButton);
+        panel.add(switchViewButton);
         this.add(panel);
 
         this.setVisible(true);
@@ -39,6 +41,12 @@ public class StartViewGUI extends JFrame implements StartView{
                 controller.onCreateHeroButtonPressed();
             }
         });
+        switchViewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onSwitchButtonPressed();
+            }
+        });
     }
 
     @Override
@@ -46,5 +54,12 @@ public class StartViewGUI extends JFrame implements StartView{
         this.setVisible(false);
         this.dispose();
         new CreateHeroViewGUI().start();
+    }
+
+    @Override
+    public void switchView() {
+        this.setVisible(false);
+        this.dispose();
+        new StartViewConsole().start();
     }
 }
