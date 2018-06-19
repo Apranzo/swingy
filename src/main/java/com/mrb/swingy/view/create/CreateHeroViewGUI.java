@@ -18,4 +18,9 @@ public class CreateHeroViewGUI implements CreateHeroView{
     public void showErrorMessage(String message) {
 
     }
+
+    @Override
+    public void openGame() {
+
+    }
 }

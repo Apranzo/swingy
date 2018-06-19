@@ -1,6 +1,7 @@
 package com.mrb.swingy.view.create;
 
 import com.mrb.swingy.controller.CreateHeroController;
+import com.mrb.swingy.view.game.GameViewConsole;
 
 import java.util.Scanner;
 
@@ -47,5 +48,10 @@ public class CreateHeroViewConsole implements CreateHeroView{
     @Override
     public void showErrorMessage(String message) {
         System.out.println("Error: " + message);
+    }
+
+    @Override
+    public void openGame() {
+        new GameViewConsole().start();
     }
 }

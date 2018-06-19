@@ -15,7 +15,7 @@ public class Director {
         builder.setWeapon(null);
         builder.setArmor(null);
         builder.setHelm(null);
-        builder.setLevel(1);
+        builder.setLevel(0);
         builder.setExperience(0);
         return builder.getHero();
     }
