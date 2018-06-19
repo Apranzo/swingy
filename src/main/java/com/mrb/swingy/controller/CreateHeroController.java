@@ -1,5 +1,6 @@
 package com.mrb.swingy.controller;
 
+import com.mrb.swingy.exception.HeroValidationException;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.HeroFactory;
 import com.mrb.swingy.view.create.CreateHeroView;
@@ -20,7 +21,8 @@ public class CreateHeroController {
         Hero hero = null;
         try {
             hero = HeroFactory.newHero(name, heroClass);
-        } catch (IllegalArgumentException e){
+            hero.validateHero();
+        } catch (IllegalArgumentException | HeroValidationException e){
             view.showErrorMessage(e.getMessage());
             view.getUserInput();
         }

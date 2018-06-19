@@ -1,8 +1,15 @@
 package com.mrb.swingy.model.character;
 
+import com.mrb.swingy.exception.HeroValidationException;
 import com.mrb.swingy.model.artifact.Armor;
 import com.mrb.swingy.model.artifact.Helm;
 import com.mrb.swingy.model.artifact.Weapon;
+
+import javax.validation.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * Created by chvs on 18.06.2018.
@@ -13,8 +20,13 @@ public class Hero extends Character {
     private Armor armor;
     private Helm helm;
 
+    @Min(value = 0, message = "Level should not be less than 0")
     private int level;
+
+    @Min(value = 0, message = "Experience should not be less than 0")
     private int experience;
+
+    @NotNull(message = "Hero class cannot be null")
     private String heroClass;
 
     public Hero(String name, int attack, int defense, int hitPoints, String heroClass,
@@ -26,6 +38,30 @@ public class Hero extends Character {
         this.level = level;
         this.experience = experience;
         this.heroClass = heroClass;
+    }
+
+    public void validateHero() throws HeroValidationException {
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(this);
+        if (constraintViolations.size() != 0){
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Hero validation\nErrors: ");
+            stringBuilder.append(constraintViolations.size());
+            stringBuilder.append("\n");
+            for (ConstraintViolation<Hero> cv : constraintViolations) {
+                stringBuilder.append("property: [");
+                stringBuilder.append(cv.getPropertyPath());
+                stringBuilder.append("], value: [");
+                stringBuilder.append(cv.getInvalidValue());
+                stringBuilder.append("], message: [");
+                stringBuilder.append(cv.getMessage());
+                stringBuilder.append("]\n");
+            }
+            throw new HeroValidationException(stringBuilder.toString());
+        }
     }
 
     public Weapon getWeapon() {
