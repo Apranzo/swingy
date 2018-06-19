@@ -17,7 +17,7 @@ public class StartViewConsole implements StartView{
         controller = new StartController(this);
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Command:");
+        System.out.println("Command(CREATE, SWITCH):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
 

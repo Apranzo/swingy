@@ -8,4 +8,14 @@ public class CreateHeroViewGUI implements CreateHeroView{
     public void start() {
         System.out.println("Start Create Hero GUI");
     }
+
+    @Override
+    public void getUserInput() {
+
+    }
+
+    @Override
+    public void showErrorMessage(String message) {
+
+    }
 }
