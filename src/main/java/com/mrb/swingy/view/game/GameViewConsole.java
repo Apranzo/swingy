@@ -17,16 +17,26 @@ public class GameViewConsole implements GameView {
         System.out.println("Game View Console");
         controller = new GameController(this);
 
+        getUserInput();
+    }
+
+    @Override
+    public void getUserInput() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Command(MAP):");
-        while (scanner.hasNext()){
+        System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST):");
+        while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
-            if ("map".equalsIgnoreCase(input)){
+            if ("map".equalsIgnoreCase(input)) {
                 controller.onPrintMap();
                 break;
-            }
-            else {
+            } else if ("north".equalsIgnoreCase(input) ||
+                    "east".equalsIgnoreCase(input) ||
+                    "south".equalsIgnoreCase(input) ||
+                    "west".equalsIgnoreCase(input)) {
+                controller.onMove(input);
+                break;
+            } else {
                 System.out.println("Unknown command");
             }
         }
@@ -36,9 +46,10 @@ public class GameViewConsole implements GameView {
     @Override
     public void printMap(boolean [][] map, Point heroCoord){
         System.out.printf("MAP %dx%d", map.length, map.length);
+        System.out.println();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (heroCoord.getX() == i && heroCoord.getY() == j)
+                if (heroCoord.getX() == j && heroCoord.getY() == i)
                     System.out.print("H ");
                 else if (map[i][j])
                     System.out.print("* ");
@@ -47,5 +58,30 @@ public class GameViewConsole implements GameView {
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public void gameFinished() {
+        System.out.println("Game finished");
+    }
+
+    @Override
+    public void getVillainCollisionInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Command(FIGHT, RUN):");
+        while (scanner.hasNext()) {
+            String input = scanner.nextLine();
+
+            if ("fight".equalsIgnoreCase(input)) {
+                controller.onFight();
+                break;
+            } else if ("run".equalsIgnoreCase(input)) {
+                controller.onRun();
+                break;
+            } else {
+                System.out.println("Unknown command");
+            }
+        }
+//        scanner.close();
     }
 }

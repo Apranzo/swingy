@@ -101,6 +101,7 @@ public class Hero extends Character {
     }
 
     public void setExperience(int experience) {
+        //todo: check hero level up
         this.experience = experience;
     }
 

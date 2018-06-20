@@ -9,4 +9,7 @@ public interface GameView {
 
     void start();
     void printMap(boolean [][] map, Point heroCoord);
+    void getUserInput();
+    void gameFinished();
+    void getVillainCollisionInput();
 }
