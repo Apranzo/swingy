@@ -1,6 +1,7 @@
 package com.mrb.swingy.view.game;
 
 import com.mrb.swingy.controller.GameController;
+import com.mrb.swingy.model.Game;
 import com.mrb.swingy.util.Point;
 
 import java.util.Scanner;
@@ -17,11 +18,16 @@ public class GameViewConsole implements GameView {
         System.out.println("Game View Console");
         controller = new GameController(this);
 
-        getUserInput();
+        controller.onStart();
     }
 
     @Override
-    public void getUserInput() {
+    public void update(Game game) {
+
+        getUserInput();
+    }
+
+    private void getUserInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST):");
         while (scanner.hasNext()) {

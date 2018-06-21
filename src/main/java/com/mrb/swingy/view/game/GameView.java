@@ -1,5 +1,6 @@
 package com.mrb.swingy.view.game;
 
+import com.mrb.swingy.model.Game;
 import com.mrb.swingy.util.Point;
 
 /**
@@ -9,7 +10,7 @@ public interface GameView {
 
     void start();
     void printMap(boolean [][] map, Point heroCoord);
-    void getUserInput();
+    void update(Game game);
     void gameFinished();
     void getVillainCollisionInput();
 }

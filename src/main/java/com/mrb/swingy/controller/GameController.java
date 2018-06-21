@@ -21,9 +21,13 @@ public class GameController {
         previousPosition = new Point(0,0);
     }
 
+    public void onStart(){
+        view.update(game);
+    }
+
     public void onPrintMap(){
         view.printMap(game.getMap(), game.getHeroCoord());
-        view.getUserInput();
+        view.update(game);
     }
 
     public void onMove(String direction){
@@ -59,7 +63,7 @@ public class GameController {
             villainCollision();
         }
 
-        view.getUserInput();
+        view.update(game);
     }
 
     private void finishGame(){
