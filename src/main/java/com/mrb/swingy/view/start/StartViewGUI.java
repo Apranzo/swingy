@@ -5,6 +5,7 @@ import com.mrb.swingy.controller.StartController;
 import com.mrb.swingy.view.create.CreateHeroViewGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,11 +29,19 @@ public class StartViewGUI extends JPanel implements StartView{
     }
 
     private void buildUI(){
-        this.add(windowLabel);
-        this.add(createHeroButton);
-        this.add(switchViewButton);
-        this.setVisible(true);
+        Main.getFrame().setTitle("Start");
+        this.setLayout(new GridBagLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5,5,5,5);
+
+        this.add(createHeroButton, gbc);
+        this.add(switchViewButton, gbc);
+
+        this.setVisible(true);
         Main.getFrame().setContentPane(this);
         Main.getFrame().revalidate();
         Main.showFrame();

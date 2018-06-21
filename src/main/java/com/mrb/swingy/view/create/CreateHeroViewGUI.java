@@ -5,6 +5,7 @@ import com.mrb.swingy.controller.CreateHeroController;
 import com.mrb.swingy.view.game.GameViewGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +14,6 @@ import java.awt.event.ActionListener;
  */
 public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
 
-    private JLabel windowLabel = new JLabel("Create Hero");
     private JLabel heroNameLabel = new JLabel("Hero name:");
     private JTextField heroNameField = new JTextField(10);
     private JButton createHeroButton = new JButton("Create Hero");
@@ -31,18 +31,25 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
     }
 
     private void buildUI(){
-        this.add(windowLabel);
+        Main.getFrame().setTitle("Create Hero");
+        this.setLayout(new GridBagLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5,5,5,5);
 
         JPanel createHeroPanel = new JPanel();
         createHeroPanel.add(heroNameLabel);
         createHeroPanel.add(heroNameField);
         createHeroPanel.setVisible(true);
-        this.add(createHeroPanel);
+        this.add(createHeroPanel, gbc);
 
         classesComboBox.setSelectedIndex(0);
-        this.add(classesComboBox);
+        this.add(classesComboBox, gbc);
 
-        this.add(createHeroButton);
+        this.add(createHeroButton, gbc);
         this.setVisible(true);
 
         Main.getFrame().setContentPane(this);

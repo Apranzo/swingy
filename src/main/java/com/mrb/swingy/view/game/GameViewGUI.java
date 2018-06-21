@@ -6,6 +6,7 @@ import com.mrb.swingy.model.Game;
 import com.mrb.swingy.util.Point;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,10 +15,10 @@ import java.awt.event.ActionListener;
  */
 public class GameViewGUI extends JPanel implements GameView {
 
-    private JLabel windowLabel = new JLabel("Game");
     private String[] directions = {"North", "East", "South", "West"};
     private JComboBox<String> directionsComboBox = new JComboBox<>(directions);
     private JButton moveButton = new JButton("Move");
+
     private JLabel heroCoordLabel = new JLabel("Position: ");
     private JLabel heroCoord = new JLabel("");
 
@@ -33,15 +34,23 @@ public class GameViewGUI extends JPanel implements GameView {
     }
 
     private void buildUI(){
-        this.add(windowLabel);
+        Main.getFrame().setTitle("Game");
+        this.setLayout(new GridBagLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5,5,5,5);
+
+        JPanel heroCoordPanel = new JPanel();
+        heroCoordPanel.add(heroCoordLabel, gbc);
+        heroCoordPanel.add(heroCoord, gbc);
+        this.add(heroCoordPanel, gbc);
 
         directionsComboBox.setSelectedIndex(0);
-        this.add(directionsComboBox);
-
-        this.add(moveButton);
-
-        this.add(heroCoordLabel);
-        this.add(heroCoord);
+        this.add(directionsComboBox, gbc);
+        this.add(moveButton, gbc);
 
         this.setVisible(true);
         Main.getFrame().setContentPane(this);
@@ -63,7 +72,7 @@ public class GameViewGUI extends JPanel implements GameView {
 
     @Override
     public void update(Game game) {
-        heroCoord.setText(game.getHeroCoord().getX() + ";" + game.getHeroCoord().getY());
+        heroCoord.setText("(" + game.getHeroCoord().getX() + "," + game.getHeroCoord().getY() + ")");
         heroCoord.validate();
     }
 
