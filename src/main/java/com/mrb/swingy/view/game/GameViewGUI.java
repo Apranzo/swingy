@@ -19,8 +19,22 @@ public class GameViewGUI extends JPanel implements GameView {
     private JComboBox<String> directionsComboBox = new JComboBox<>(directions);
     private JButton moveButton = new JButton("Move");
 
+    private JLabel heroNameLabel = new JLabel("Name: ");
+    private JLabel heroName = new JLabel("");
     private JLabel heroCoordLabel = new JLabel("Position: ");
     private JLabel heroCoord = new JLabel("");
+    private JLabel heroLevelLabel = new JLabel("Level: ");
+    private JLabel heroLevel = new JLabel("");
+    private JLabel heroXPLabel = new JLabel("XP: ");
+    private JLabel heroXP = new JLabel("");
+    private JLabel heroHPLabel = new JLabel("HP: ");
+    private JLabel heroHP = new JLabel("");
+    private JLabel heroAttackLabel = new JLabel("Attack: ");
+    private JLabel heroAttack = new JLabel("");
+    private JLabel heroDefenseLabel = new JLabel("Defense: ");
+    private JLabel heroDefense = new JLabel("");
+
+    private JLabel mapLabel = new JLabel();
 
     private GameController controller;
 
@@ -41,12 +55,15 @@ public class GameViewGUI extends JPanel implements GameView {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5,5,5,5);
 
-        JPanel heroCoordPanel = new JPanel();
-        heroCoordPanel.add(heroCoordLabel, gbc);
-        heroCoordPanel.add(heroCoord, gbc);
-        this.add(heroCoordPanel, gbc);
+        this.add(getPanel(heroNameLabel, heroName), gbc);
+        this.add(getPanel(heroCoordLabel, heroCoord), gbc);
+        this.add(getPanel(heroXPLabel, heroXP), gbc);
+        this.add(getPanel(heroHPLabel, heroHP), gbc);
+        this.add(getPanel(heroAttackLabel, heroAttack), gbc);
+        this.add(getPanel(heroDefenseLabel, heroDefense), gbc);
+        gbc.insets = new Insets(5,5,5,5);
+        this.add(mapLabel, gbc);
 
         directionsComboBox.setSelectedIndex(0);
         this.add(directionsComboBox, gbc);
@@ -65,15 +82,52 @@ public class GameViewGUI extends JPanel implements GameView {
         });
     }
 
+    private JPanel getPanel(JLabel first, JLabel second){
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.add(first);
+        panel.add(second);
+        return panel;
+    }
+
     @Override
     public void printMap(boolean[][] map, Point heroCoord) {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("<html>MAP %dx%d<br>", map.length, map.length));
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (heroCoord.getX() == j && heroCoord.getY() == i)
+                    stringBuilder.append("! ");
+                else if (map[i][j])
+                    stringBuilder.append("* ");
+                else
+                    stringBuilder.append(". ");
+            }
+            stringBuilder.append("<br>");
+        }
+        stringBuilder.append("</html>");
+        mapLabel.setText(stringBuilder.toString());
+        mapLabel.validate();
     }
 
     @Override
     public void update(Game game) {
+        heroName.setText(game.getHero().getName());
+        heroName.validate();
         heroCoord.setText("(" + game.getHeroCoord().getX() + "," + game.getHeroCoord().getY() + ")");
         heroCoord.validate();
+        heroLevel.setText(Integer.toString(game.getHero().getLevel()));
+        heroLevel.validate();
+        heroXP.setText(Integer.toString(game.getHero().getExperience()));
+        heroXP.validate();
+        heroHP.setText(Integer.toString(game.getHero().getHitPoints()));
+        heroHP.validate();
+        heroAttack.setText(Integer.toString(game.getHero().getAttack()));
+        heroAttack.validate();
+        heroDefense.setText(Integer.toString(game.getHero().getDefense()));
+        heroDefense.validate();
+
+        printMap(game.getMap(), game.getHeroCoord());
     }
 
     @Override
