@@ -1,5 +1,6 @@
 package com.mrb.swingy.view.start;
 
+import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.StartController;
 import com.mrb.swingy.view.create.CreateHeroViewGUI;
 
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by chvs on 18.06.2018.
  */
-public class StartViewGUI extends JFrame implements StartView{
+public class StartViewGUI extends JPanel implements StartView{
 
     private JLabel windowLabel = new JLabel("Start");
     private JButton createHeroButton = new JButton("Create Hero");
@@ -23,17 +24,18 @@ public class StartViewGUI extends JFrame implements StartView{
         System.out.println("Start View GUI");
         controller = new StartController(this);
 
-        JPanel panel = new JPanel();
+        buildUI();
+    }
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500,500);
-
-        panel.add(windowLabel);
-        panel.add(createHeroButton);
-        panel.add(switchViewButton);
-        this.add(panel);
-
+    private void buildUI(){
+        this.add(windowLabel);
+        this.add(createHeroButton);
+        this.add(switchViewButton);
         this.setVisible(true);
+
+        Main.getFrame().setContentPane(this);
+        Main.getFrame().revalidate();
+        Main.showFrame();
 
         createHeroButton.addActionListener(new ActionListener() {
             @Override
@@ -52,14 +54,12 @@ public class StartViewGUI extends JFrame implements StartView{
     @Override
     public void openCreateHero() {
         this.setVisible(false);
-        this.dispose();
         new CreateHeroViewGUI().start();
     }
 
     @Override
     public void switchView() {
-        this.setVisible(false);
-        this.dispose();
+        Main.hideFrame();
         new StartViewConsole().start();
     }
 }

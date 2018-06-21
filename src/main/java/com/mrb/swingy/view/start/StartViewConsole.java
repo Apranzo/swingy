@@ -1,5 +1,6 @@
 package com.mrb.swingy.view.start;
 
+import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.StartController;
 import com.mrb.swingy.view.create.CreateHeroViewConsole;
 import java.util.Scanner;
