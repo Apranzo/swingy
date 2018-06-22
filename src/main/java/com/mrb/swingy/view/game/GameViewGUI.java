@@ -34,7 +34,7 @@ public class GameViewGUI extends JPanel implements GameView {
     private JLabel heroDefenseLabel = new JLabel("Defense: ");
     private JLabel heroDefense = new JLabel("");
 
-    private JLabel mapLabel = new JLabel();
+    private JEditorPane mapPane = new JEditorPane();
 
     private GameController controller;
 
@@ -58,12 +58,19 @@ public class GameViewGUI extends JPanel implements GameView {
 
         this.add(getPanel(heroNameLabel, heroName), gbc);
         this.add(getPanel(heroCoordLabel, heroCoord), gbc);
+        this.add(getPanel(heroLevelLabel, heroLevel), gbc);
         this.add(getPanel(heroXPLabel, heroXP), gbc);
         this.add(getPanel(heroHPLabel, heroHP), gbc);
         this.add(getPanel(heroAttackLabel, heroAttack), gbc);
         this.add(getPanel(heroDefenseLabel, heroDefense), gbc);
         gbc.insets = new Insets(5,5,5,5);
-        this.add(mapLabel, gbc);
+
+        mapPane.setEditable(false);
+        mapPane.setText("Map");
+        JScrollPane mapScroll = new JScrollPane(mapPane);
+        mapScroll.setPreferredSize(new Dimension(300, 300));
+        mapScroll.setMinimumSize(new Dimension(200, 200));
+        this.add(mapScroll);
 
         directionsComboBox.setSelectedIndex(0);
         this.add(directionsComboBox, gbc);
@@ -93,7 +100,7 @@ public class GameViewGUI extends JPanel implements GameView {
     @Override
     public void printMap(boolean[][] map, Point heroCoord) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("<html>MAP %dx%d<br>", map.length, map.length));
+        stringBuilder.append(String.format("MAP %dx%d\n", map.length, map.length));
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (heroCoord.getX() == j && heroCoord.getY() == i)
@@ -103,11 +110,9 @@ public class GameViewGUI extends JPanel implements GameView {
                 else
                     stringBuilder.append(". ");
             }
-            stringBuilder.append("<br>");
+            stringBuilder.append("\n");
         }
-        stringBuilder.append("</html>");
-        mapLabel.setText(stringBuilder.toString());
-        mapLabel.validate();
+        mapPane.setText(stringBuilder.toString());
     }
 
     @Override

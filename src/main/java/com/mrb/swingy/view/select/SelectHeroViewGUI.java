@@ -2,19 +2,25 @@ package com.mrb.swingy.view.select;
 
 import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.SelectHeroController;
+import com.mrb.swingy.view.game.GameViewGUI;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by chvs on 22.06.2018.
  */
 public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
 
-    JEditorPane infoPane = new JEditorPane();
+    private JEditorPane infoPane = new JEditorPane();
+    private JButton selectButton = new JButton("Select");
+
     private SelectHeroController controller;
+    private int lastSelectedIdx;
 
     @Override
     public void start() {
@@ -25,7 +31,7 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
     }
 
     private void buildUI(){
-        Main.getFrame().setTitle("Create Hero");
+        Main.getFrame().setTitle("Select Hero");
         this.setLayout(new GridBagLayout());
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
@@ -39,16 +45,20 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
-        JScrollPane listScroller = new JScrollPane(list);
-        listScroller.setPreferredSize(new Dimension(200, 200));
-        this.add(listScroller);
+        JScrollPane listScroll = new JScrollPane(list);
+        listScroll.setPreferredSize(new Dimension(200, 200));
+        listScroll.setMinimumSize(new Dimension(150, 150));
+        this.add(listScroll);
 
         infoPane.setEditable(false);
         infoPane.setText("Select hero to see information");
-        JScrollPane infoScroller = new JScrollPane(infoPane);
-        infoScroller.setPreferredSize(new Dimension(200,200));
-        infoScroller.setMinimumSize(new Dimension(10,10));
-        this.add(infoScroller);
+        JScrollPane infoScroll = new JScrollPane(infoPane);
+        infoScroll.setPreferredSize(new Dimension(200, 200));
+        infoScroll.setMinimumSize(new Dimension(150, 150));
+        this.add(infoScroll);
+
+        this.add(selectButton);
+        selectButton.setEnabled(false);
 
         this.setVisible(true);
 
@@ -60,9 +70,20 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()){
-                    if (list.getSelectedIndex() != -1)
+                    if (list.getSelectedIndex() != -1) {
                         controller.onListElementSelected(list.getSelectedIndex());
+                        selectButton.setEnabled(true);
+                        lastSelectedIdx = list.getSelectedIndex();
+                    }
+                    else
+                        selectButton.setEnabled(false);
                 }
+            }
+        });
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onSelectButtonPressed(lastSelectedIdx);
             }
         });
     }
@@ -72,4 +93,14 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
         infoPane.setText(info);
     }
 
+    @Override
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(Main.getFrame(), message);
+    }
+
+    @Override
+    public void openGame() {
+        this.setVisible(false);
+        new GameViewGUI().start();
+    }
 }

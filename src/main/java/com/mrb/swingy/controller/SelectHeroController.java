@@ -1,5 +1,10 @@
 package com.mrb.swingy.controller;
 
+import com.mrb.swingy.exception.HeroValidationException;
+import com.mrb.swingy.model.Game;
+import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.model.character.HeroBuilder;
+import com.mrb.swingy.model.character.HeroFactory;
 import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.view.select.SelectHeroView;
 
@@ -10,10 +15,12 @@ import java.util.ArrayList;
  */
 public class SelectHeroController {
 
-    SelectHeroView view;
+    private SelectHeroView view;
+    private Game game;
 
     public SelectHeroController(SelectHeroView view){
         this.view = view;
+        game = Game.getInstance();
     }
 
     public void onListElementSelected(int idx){
@@ -34,5 +41,29 @@ public class SelectHeroController {
         String[] listArr = new String[list.size()];
         listArr = list.toArray(listArr);
         return listArr;
+    }
+
+    public void onSelectButtonPressed(int idx){
+        System.out.println("controller selected index - " + idx);
+        ArrayList<String> heroDb = DataBase.selectById(idx + 1);
+
+        Hero hero;
+        try {
+            HeroBuilder builder = new HeroBuilder();
+            builder.setName(heroDb.get(0));
+            builder.setHeroClass(heroDb.get(1));
+            builder.setLevel(Integer.parseInt(heroDb.get(2)));
+            builder.setExperience(Integer.parseInt(heroDb.get(3)));
+            builder.setAttack(Integer.parseInt(heroDb.get(4)));
+            builder.setDefense(Integer.parseInt(heroDb.get(5)));
+            builder.setHitPoints(Integer.parseInt(heroDb.get(6)));
+            hero = builder.getHero();
+            hero.validateHero();
+        } catch (HeroValidationException e){
+            view.showErrorMessage(e.getMessage());
+            return;
+        }
+        game.initGame(hero);
+        view.openGame();
     }
 }

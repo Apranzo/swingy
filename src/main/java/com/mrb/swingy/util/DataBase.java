@@ -63,7 +63,7 @@ public class DataBase {
         try (Statement stmt = getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sqlQuery)){
             for (int i = 1; rs.next(); i++){
-                arrayList.add(String.format("%d. %s(%s)", i, rs.getString("name"), rs.getString("class")));
+                arrayList.add(String.format("%d. %s (%s)", i, rs.getString("name"), rs.getString("class")));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());

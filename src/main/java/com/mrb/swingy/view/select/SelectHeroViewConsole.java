@@ -13,4 +13,14 @@ public class SelectHeroViewConsole implements SelectHeroView {
     public void updateInfo(String info) {
 
     }
+
+    @Override
+    public void showErrorMessage(String message) {
+        System.out.println("Error: " + message);
+    }
+
+    @Override
+    public void openGame() {
+
+    }
 }
