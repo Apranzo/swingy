@@ -20,4 +20,8 @@ public class StartController {
     public void onSwitchButtonPressed(){
         view.switchView();
     }
+
+    public void onSelectHeroButtonPressed(){
+        view.openSelectHero();
+    }
 }

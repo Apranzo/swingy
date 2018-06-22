@@ -3,6 +3,7 @@ package com.mrb.swingy.view.start;
 import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.StartController;
 import com.mrb.swingy.view.create.CreateHeroViewGUI;
+import com.mrb.swingy.view.select.SelectHeroViewGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class StartViewGUI extends JPanel implements StartView{
 
     private JLabel windowLabel = new JLabel("Start");
     private JButton createHeroButton = new JButton("Create Hero");
+    private JButton selectHeroButton = new JButton("Select Hero");
     private JButton switchViewButton = new JButton("Switch to console");
 
     private StartController controller;
@@ -39,6 +41,7 @@ public class StartViewGUI extends JPanel implements StartView{
         gbc.insets = new Insets(5,5,5,5);
 
         this.add(createHeroButton, gbc);
+        this.add(selectHeroButton, gbc);
         this.add(switchViewButton, gbc);
 
         this.setVisible(true);
@@ -50,6 +53,12 @@ public class StartViewGUI extends JPanel implements StartView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onCreateHeroButtonPressed();
+            }
+        });
+        selectHeroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onSelectHeroButtonPressed();
             }
         });
         switchViewButton.addActionListener(new ActionListener() {
@@ -70,5 +79,11 @@ public class StartViewGUI extends JPanel implements StartView{
     public void switchView() {
         Main.hideFrame();
         new StartViewConsole().start();
+    }
+
+    @Override
+    public void openSelectHero() {
+        this.setVisible(false);
+        new SelectHeroViewGUI().start();
     }
 }

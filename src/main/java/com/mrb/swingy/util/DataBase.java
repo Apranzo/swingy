@@ -1,6 +1,7 @@
 package com.mrb.swingy.util;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by chvs on 22.06.2018.
@@ -55,18 +56,41 @@ public class DataBase {
         }
     }
 
-    public static void selectAll(){
+    public static ArrayList<String> selectAll(){
         String sqlQuery = "SELECT * FROM heroes";
+        ArrayList<String> arrayList = new ArrayList<>();
 
         try (Statement stmt = getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sqlQuery)){
-            while (rs.next()){
-                System.out.println(rs.getInt("id") + "\t" +
-                        rs.getString("name") + "\t" +
-                        rs.getString("class"));
+            for (int i = 1; rs.next(); i++){
+                arrayList.add(String.format("%d. %s(%s)", i, rs.getString("name"), rs.getString("class")));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
+        return arrayList;
+    }
+
+    public static ArrayList<String> selectById(int id){
+        String sqlQuery = "SELECT * FROM heroes WHERE id=?";
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
+
+            pstmt.setInt(1,id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                arrayList.add(rs.getString("name"));
+                arrayList.add(rs.getString("class"));
+                arrayList.add(Integer.toString(rs.getInt("level")));
+                arrayList.add(Integer.toString(rs.getInt("xp")));
+                arrayList.add(Integer.toString(rs.getInt("attack")));
+                arrayList.add(Integer.toString(rs.getInt("defense")));
+                arrayList.add(Integer.toString(rs.getInt("hp")));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return arrayList;
     }
 }

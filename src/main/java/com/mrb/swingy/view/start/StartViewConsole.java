@@ -3,6 +3,8 @@ package com.mrb.swingy.view.start;
 import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.StartController;
 import com.mrb.swingy.view.create.CreateHeroViewConsole;
+import com.mrb.swingy.view.select.SelectHeroViewConsole;
+
 import java.util.Scanner;
 
 /**
@@ -18,12 +20,15 @@ public class StartViewConsole implements StartView{
         controller = new StartController(this);
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Command(CREATE, SWITCH):");
+        System.out.println("Command(CREATE, SELECT, SWITCH):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
 
             if ("create".equalsIgnoreCase(input)){
                 controller.onCreateHeroButtonPressed();
+                break;
+            } else if ("select".equalsIgnoreCase(input)){
+                controller.onSelectHeroButtonPressed();
                 break;
             } else if ("switch".equalsIgnoreCase(input)){
                 controller.onSwitchButtonPressed();
@@ -44,5 +49,10 @@ public class StartViewConsole implements StartView{
     @Override
     public void switchView() {
         new StartViewGUI().start();
+    }
+
+    @Override
+    public void openSelectHero() {
+        new SelectHeroViewConsole().start();
     }
 }
