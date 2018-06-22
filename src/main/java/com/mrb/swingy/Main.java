@@ -1,5 +1,6 @@
 package com.mrb.swingy;
 
+import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.view.start.StartViewConsole;
 import com.mrb.swingy.view.start.StartViewGUI;
 
@@ -14,11 +15,13 @@ public class Main {
             System.out.println("Usage: program console | gui");
             System.exit(1);
         }
+        DataBase.connect();
         if (args[0].equals("console"))
             new StartViewConsole().start();
         else if (args[0].equals("gui")){
             new StartViewGUI().start();
         }
+        DataBase.close();
     }
 
     public static JFrame getFrame(){
