@@ -39,9 +39,9 @@ public class DataBase {
         return connection;
     }
 
-    public static void insert(String name, String className, int level, int xp, int attack, int defense, int hp){
+    public static int insert(String name, String className, int level, int xp, int attack, int defense, int hp){
         String sqlQuery = "INSERT INTO heroes(name, class, level, xp, attack, defense, hp) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
+        int id = 0;
         try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
             pstmt.setString(1, name);
             pstmt.setString(2, className);
@@ -51,9 +51,15 @@ public class DataBase {
             pstmt.setInt(6, defense);
             pstmt.setInt(7, hp);
             pstmt.executeUpdate();
+
+            Statement stmt = getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT seq FROM sqlite_sequence WHERE name=\"heroes\"");
+            if (rs.next())
+                id = rs.getInt("seq");
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
+        return id;
     }
 
     public static ArrayList<String> selectAll(){
@@ -87,10 +93,28 @@ public class DataBase {
                 arrayList.add(Integer.toString(rs.getInt("attack")));
                 arrayList.add(Integer.toString(rs.getInt("defense")));
                 arrayList.add(Integer.toString(rs.getInt("hp")));
+                arrayList.add(Integer.toString(rs.getInt("id")));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
         return arrayList;
+    }
+
+    public static void update(int id, int level, int xp, int attack, int defense, int hp){
+        String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? WHERE id = ?";
+
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
+            pstmt.setInt(1, level);
+            pstmt.setInt(2, xp);
+            pstmt.setInt(3, attack);
+            pstmt.setInt(4, defense);
+            pstmt.setInt(5, hp);
+            pstmt.setInt(6, id);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

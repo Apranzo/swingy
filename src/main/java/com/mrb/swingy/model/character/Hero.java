@@ -29,15 +29,26 @@ public class Hero extends Character {
     @NotNull(message = "Hero class cannot be null")
     private String heroClass;
 
-    public Hero(String name, int attack, int defense, int hitPoints, String heroClass,
+    private int id;
+
+    public Hero(String name, int attack, int defense, int hitPoints, int id, String heroClass,
                 int level, int experience, Weapon weapon, Armor armor, Helm helm) {
         super(name, attack, defense, hitPoints);
+        this.id = id;
         this.weapon = weapon;
         this.armor = armor;
         this.helm = helm;
         this.level = level;
         this.experience = experience;
         this.heroClass = heroClass;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void validateHero() throws HeroValidationException {

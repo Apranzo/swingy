@@ -137,8 +137,13 @@ public class GameViewGUI extends JPanel implements GameView {
 
     @Override
     public void gameFinished() {
-        JOptionPane.showMessageDialog(Main.getFrame(), "Game finished");
         Main.hideFrame();
+        Main.getFrame().dispose();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(Main.getFrame(), message);
     }
 
     @Override

@@ -68,7 +68,12 @@ public class GameViewConsole implements GameView {
 
     @Override
     public void gameFinished() {
-        System.out.println("Game finished");
+        System.out.println("See you!");
+    }
+
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 
     @Override

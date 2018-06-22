@@ -12,5 +12,6 @@ public interface GameView {
     void printMap(boolean [][] map, Point heroCoord);
     void update(Game game);
     void gameFinished();
+    void showMessage(String message);
     void getVillainCollisionInput();
 }

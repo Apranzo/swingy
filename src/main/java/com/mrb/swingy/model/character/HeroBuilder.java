@@ -8,6 +8,7 @@ import com.mrb.swingy.model.artifact.Weapon;
  * Created by chvs on 19.06.2018.
  */
 public class HeroBuilder {
+    private int id;
     private String name;
     private int attack;
     private int defense;
@@ -18,6 +19,10 @@ public class HeroBuilder {
     private Weapon weapon;
     private Armor armor;
     private Helm helm;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -60,6 +65,6 @@ public class HeroBuilder {
     }
 
     public Hero getHero(){
-        return new Hero(name, attack, defense, hitPoints, heroClass, level, experience, weapon, armor, helm);
+        return new Hero(name, attack, defense, hitPoints, id, heroClass, level, experience, weapon, armor, helm);
     }
 }

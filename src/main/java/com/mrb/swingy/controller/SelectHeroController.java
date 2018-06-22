@@ -57,6 +57,7 @@ public class SelectHeroController {
             builder.setAttack(Integer.parseInt(heroDb.get(4)));
             builder.setDefense(Integer.parseInt(heroDb.get(5)));
             builder.setHitPoints(Integer.parseInt(heroDb.get(6)));
+            builder.setId(Integer.parseInt(heroDb.get(7)));
             hero = builder.getHero();
             hero.validateHero();
         } catch (HeroValidationException e){

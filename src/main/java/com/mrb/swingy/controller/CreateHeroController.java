@@ -31,8 +31,9 @@ public class CreateHeroController {
             view.getUserInput();
             return;
         }
+        int id = DataBase.insert(hero.getName(), hero.getHeroClass(), hero.getLevel(), hero.getExperience(), hero.getAttack(), hero.getDefense(), hero.getHitPoints());
+        hero.setId(id);
         game.initGame(hero);
-        DataBase.insert(hero.getName(), hero.getHeroClass(), hero.getLevel(), hero.getExperience(), hero.getAttack(), hero.getDefense(), hero.getHitPoints());
         view.openGame();
     }
 }

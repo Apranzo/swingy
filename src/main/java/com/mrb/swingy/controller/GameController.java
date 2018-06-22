@@ -1,6 +1,8 @@
 package com.mrb.swingy.controller;
 
 import com.mrb.swingy.model.Game;
+import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.util.Point;
 import com.mrb.swingy.view.game.GameView;
 
@@ -68,7 +70,14 @@ public class GameController {
 
     private void finishGame(){
         game.getHero().setExperience(game.getHero().getExperience() + game.getMapSize() * 100);
+        updateDataBase();
+        view.showMessage("You win! And got additional " + game.getMapSize() * 100 + "xp!");
         view.gameFinished();
+    }
+
+    private void updateDataBase(){
+        Hero hero = game.getHero();
+        DataBase.update(hero.getId(), hero.getLevel(), hero.getExperience(), hero.getAttack(), hero.getDefense(), hero.getHitPoints());
     }
 
     private void villainCollision(){
