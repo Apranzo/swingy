@@ -1,6 +1,7 @@
 package com.mrb.swingy.model;
 
 import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.Point;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -51,6 +52,36 @@ public class Game {
                     map[i][j] = true;
             }
         }
+    }
+
+    public Villain generateVillain(){
+        int attack = ThreadLocalRandom.current().nextInt(hero.getAttack() - 20, hero.getAttack() + 2 + hero.getLevel());
+        int defense = ThreadLocalRandom.current().nextInt(hero.getDefense() - 20, hero.getDefense() + 2 + hero.getLevel());
+        int hitPoints = ThreadLocalRandom.current().nextInt(hero.getHitPoints() - 50, hero.getHitPoints() + 20 + hero.getLevel());
+        attack = attack < 0 ? -attack : attack;
+        defense = defense < 0 ? -defense : defense;
+        hitPoints = hitPoints < 0 ? -hitPoints : hitPoints;
+        return  new Villain("Villain", attack, defense, hitPoints, null);
+    }
+
+    public int fight(Villain villain){
+        int xp = villain.getAttack() + villain.getDefense() + villain.getHitPoints();
+        int rand = ThreadLocalRandom.current().nextInt(0, 101);
+        if (rand < 3)
+            return xp;
+        else if (rand > 98)
+            return -1;
+
+        System.out.println("Villain: " + villain.getAttack() + " " + villain.getDefense() + " " + villain.getHitPoints());
+
+        while (villain.getHitPoints() > 0 && hero.getHitPoints() > 0){
+            hero.attack(villain);
+            villain.attack(hero);
+        }
+
+        if (hero.getHitPoints() < 0)
+            return -1;
+        return xp;
     }
 
     private void putHero(){

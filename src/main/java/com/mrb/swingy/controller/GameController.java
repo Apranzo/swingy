@@ -2,6 +2,7 @@ package com.mrb.swingy.controller;
 
 import com.mrb.swingy.model.Game;
 import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.util.Point;
 import com.mrb.swingy.view.game.GameView;
@@ -54,7 +55,7 @@ public class GameController {
         }
 
         if (x < 0 || y < 0 || x >= game.getMapSize() || y >= game.getMapSize()) {
-            finishGame();
+            winGame();
             return;
         }
 
@@ -68,7 +69,7 @@ public class GameController {
         view.update(game);
     }
 
-    private void finishGame(){
+    private void winGame(){
         game.getHero().setExperience(game.getHero().getExperience() + game.getMapSize() * 100);
         updateDataBase();
         view.showMessage("You win! And got additional " + game.getMapSize() * 100 + "xp!");
@@ -86,16 +87,25 @@ public class GameController {
 
     public void onRun(){
         if (new Random().nextBoolean()){
-            System.out.println("You are lucky"); //todo: message
+            view.showMessage("You are lucky! And moved to previous position!");
             game.getHeroCoord().setX(previousPosition.getX());
             game.getHeroCoord().setY(previousPosition.getY());
         } else {
-            System.out.println("You have to fight"); //todo: message
+            view.showMessage("You have to fight");
             onFight();
         }
     }
 
     public void onFight(){
-        //todo: fight
+        Villain villain = game.generateVillain();
+        int xp = game.fight(villain);
+        if (xp > 0) {
+            view.showMessage("You win, and got " + xp + "xp.");
+            game.getHero().setExperience(game.getHero().getExperience() + xp);
+            game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;
+        } else{
+            view.showMessage("Game over :(");
+            view.gameFinished();
+        }
     }
 }

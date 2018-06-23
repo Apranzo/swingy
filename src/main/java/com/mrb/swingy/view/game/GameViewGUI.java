@@ -150,7 +150,7 @@ public class GameViewGUI extends JPanel implements GameView {
     public void getVillainCollisionInput() {
         Object options[] = {"Fight", "Run"};
 
-        int result = JOptionPane.showOptionDialog(Main.getFrame(), "Fight or run?", "Title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        int result = JOptionPane.showOptionDialog(Main.getFrame(), "You moved to position occupied by villain", "Fight or run?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (result == JOptionPane.YES_OPTION)
             controller.onFight();
         else

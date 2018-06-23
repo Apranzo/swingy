@@ -29,6 +29,13 @@ public abstract class Character {
         this.hitPoints = hitPoints;
     }
 
+    public void attack(Character opponent){
+        if (this.attack > opponent.defense){
+            System.out.println(opponent.getName() + " attacked");
+            opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
+        }
+    }
+
     public String getName() {
         return name;
     }
