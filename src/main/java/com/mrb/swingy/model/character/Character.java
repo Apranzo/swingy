@@ -29,11 +29,19 @@ public abstract class Character {
         this.hitPoints = hitPoints;
     }
 
-    public void attack(Character opponent){
+    private void attack(Character opponent){
         if (this.attack > opponent.defense){
             System.out.println(opponent.getName() + " attacked");
             opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
         }
+    }
+
+    public boolean fight(Character opponent){
+        while (opponent.getHitPoints() > 0 && this.getHitPoints() > 0){
+            this.attack(opponent);
+            opponent.attack(this);
+        }
+        return this.getHitPoints() > 0;
     }
 
     public String getName() {

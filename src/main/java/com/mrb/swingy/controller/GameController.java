@@ -98,8 +98,8 @@ public class GameController {
 
     public void onFight(){
         Villain villain = game.generateVillain();
-        int xp = game.fight(villain);
-        if (xp > 0) {
+        int xp = game.fightResult(villain);
+        if (xp >= 0) {
             view.showMessage("You win, and got " + xp + "xp.");
             game.getHero().setExperience(game.getHero().getExperience() + xp);
             game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;

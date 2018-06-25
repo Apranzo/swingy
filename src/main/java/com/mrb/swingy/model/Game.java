@@ -1,5 +1,6 @@
 package com.mrb.swingy.model;
 
+import com.mrb.swingy.model.character.Character;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.Point;
@@ -64,7 +65,7 @@ public class Game {
         return  new Villain("Villain", attack, defense, hitPoints, null);
     }
 
-    public int fight(Villain villain){
+    public int fightResult(Character villain){
         int xp = villain.getAttack() + villain.getDefense() + villain.getHitPoints();
         int rand = ThreadLocalRandom.current().nextInt(0, 101);
         if (rand < 3)
@@ -73,15 +74,7 @@ public class Game {
             return -1;
 
         System.out.println("Villain: " + villain.getAttack() + " " + villain.getDefense() + " " + villain.getHitPoints());
-
-        while (villain.getHitPoints() > 0 && hero.getHitPoints() > 0){
-            hero.attack(villain);
-            villain.attack(hero);
-        }
-
-        if (hero.getHitPoints() < 0)
-            return -1;
-        return xp;
+        return hero.fight(villain) ? xp : -1;
     }
 
     private void putHero(){
