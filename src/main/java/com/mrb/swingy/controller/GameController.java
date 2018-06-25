@@ -1,6 +1,10 @@
 package com.mrb.swingy.controller;
 
 import com.mrb.swingy.model.Game;
+import com.mrb.swingy.model.artifact.Armor;
+import com.mrb.swingy.model.artifact.Artifact;
+import com.mrb.swingy.model.artifact.Helm;
+import com.mrb.swingy.model.artifact.Weapon;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.DataBase;
@@ -78,7 +82,29 @@ public class GameController {
 
     private void updateDataBase(){
         Hero hero = game.getHero();
-        DataBase.update(hero.getId(), hero.getLevel(), hero.getExperience(), hero.getAttack(), hero.getDefense(), hero.getHitPoints());
+
+        String weaponName = null;
+        int weaponValue = 0;
+        if (hero.getWeapon() != null){
+            weaponName = hero.getWeapon().getName();
+            weaponValue = hero.getWeapon().getPoints();
+        }
+
+        String helmName = null;
+        int helmValue = 0;
+        if (hero.getHelm() != null){
+            helmName = hero.getHelm().getName();
+            helmValue = hero.getHelm().getPoints();
+        }
+
+        String armorName = null;
+        int armorValue = 0;
+        if (hero.getArmor() != null){
+            armorName = hero.getArmor().getName();
+            armorValue = hero.getArmor().getPoints();
+        }
+
+        DataBase.update(hero.getId(), hero.getLevel(), hero.getExperience(), hero.getAttack(), hero.getDefense(), hero.getHitPoints(), weaponName, weaponValue, helmName, helmValue, armorName, armorValue);
     }
 
     private void villainCollision(){
@@ -96,6 +122,23 @@ public class GameController {
         }
     }
 
+    private void setArtifact(Artifact artifact){
+        if (artifact != null)
+        {
+            System.out.println("Artifact!!!");
+            if (artifact instanceof Weapon) {
+                game.getHero().setWeapon((Weapon) artifact);
+                System.out.println("Weapon");
+            } else if (artifact instanceof Helm){
+                game.getHero().setHelm((Helm) artifact);
+                System.out.println("Helm");
+            } else if (artifact instanceof Armor){
+                game.getHero().setArmor((Armor) artifact);
+                System.out.println("Armor");
+            }
+        }
+    }
+
     public void onFight(){
         Villain villain = game.generateVillain();
         int xp = game.fightResult(villain);
@@ -103,6 +146,7 @@ public class GameController {
             view.showMessage("You win, and got " + xp + "xp.");
             game.getHero().setExperience(game.getHero().getExperience() + xp);
             game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;
+            setArtifact(villain.getArtifact());
         } else{
             view.showMessage("Game over :(");
             view.gameFinished();

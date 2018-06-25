@@ -94,6 +94,12 @@ public class DataBase {
                 arrayList.add(Integer.toString(rs.getInt("defense")));
                 arrayList.add(Integer.toString(rs.getInt("hp")));
                 arrayList.add(Integer.toString(rs.getInt("id")));
+                arrayList.add(rs.getString("weapon_name"));
+                arrayList.add(Integer.toString(rs.getInt("weapon_value")));
+                arrayList.add(rs.getString("helm_name"));
+                arrayList.add(Integer.toString(rs.getInt("helm_value")));
+                arrayList.add(rs.getString("armor_name"));
+                arrayList.add(Integer.toString(rs.getInt("armor_value")));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -101,8 +107,8 @@ public class DataBase {
         return arrayList;
     }
 
-    public static void update(int id, int level, int xp, int attack, int defense, int hp){
-        String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? WHERE id = ?";
+    public static void update(int id, int level, int xp, int attack, int defense, int hp, String weaponName, int weaponPoints, String helmName, int helmPoints, String armorName, int armorPoints){
+        String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? , weapon_name = ?, weapon_value = ?, helm_name = ?, helm_value = ?, armor_name = ?, armor_value = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
             pstmt.setInt(1, level);
@@ -110,7 +116,13 @@ public class DataBase {
             pstmt.setInt(3, attack);
             pstmt.setInt(4, defense);
             pstmt.setInt(5, hp);
-            pstmt.setInt(6, id);
+            pstmt.setString(6, weaponName);
+            pstmt.setInt(7, weaponPoints);
+            pstmt.setString(8, helmName);
+            pstmt.setInt(9, helmPoints);
+            pstmt.setString(10, armorName);
+            pstmt.setInt(11, armorPoints);
+            pstmt.setInt(12, id);
 
             pstmt.executeUpdate();
         } catch (SQLException e){

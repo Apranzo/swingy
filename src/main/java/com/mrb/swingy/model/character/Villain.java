@@ -13,4 +13,8 @@ public class Villain extends Character {
         super(name, attack, defense, hitPoints);
         this.artifact = artifact;
     }
+
+    public Artifact getArtifact() {
+        return artifact;
+    }
 }

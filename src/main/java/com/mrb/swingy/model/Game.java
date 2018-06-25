@@ -1,5 +1,9 @@
 package com.mrb.swingy.model;
 
+import com.mrb.swingy.model.artifact.Armor;
+import com.mrb.swingy.model.artifact.Artifact;
+import com.mrb.swingy.model.artifact.Helm;
+import com.mrb.swingy.model.artifact.Weapon;
 import com.mrb.swingy.model.character.Character;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.Villain;
@@ -62,7 +66,21 @@ public class Game {
         attack = attack < 0 ? -attack : attack;
         defense = defense < 0 ? -defense : defense;
         hitPoints = hitPoints < 0 ? -hitPoints : hitPoints;
-        return  new Villain("Villain", attack, defense, hitPoints, null);
+        Artifact artifact = generateArtifact();
+        return  new Villain("Villain", attack, defense, hitPoints, artifact);
+    }
+
+    private Artifact generateArtifact(){
+        int rand = ThreadLocalRandom.current().nextInt(0,3);
+
+        Artifact artifact = null;
+        if (rand == 0)
+            artifact = new Weapon("Sword", 10);
+        else if (rand == 1)
+            artifact = new Helm("Helmet", 5);
+        else if (rand == 2)
+            artifact = new Armor("Armor", 8);
+        return artifact;
     }
 
     public int fightResult(Character villain){

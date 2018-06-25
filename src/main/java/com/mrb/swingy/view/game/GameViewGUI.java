@@ -33,6 +33,8 @@ public class GameViewGUI extends JPanel implements GameView {
     private JLabel heroAttack = new JLabel("");
     private JLabel heroDefenseLabel = new JLabel("Defense: ");
     private JLabel heroDefense = new JLabel("");
+    private JLabel heroWeaponLabel = new JLabel("Weapon: ");
+    private JLabel heroWeapon = new JLabel("");
 
     private JEditorPane mapPane = new JEditorPane();
 
@@ -63,6 +65,7 @@ public class GameViewGUI extends JPanel implements GameView {
         this.add(getPanel(heroHPLabel, heroHP), gbc);
         this.add(getPanel(heroAttackLabel, heroAttack), gbc);
         this.add(getPanel(heroDefenseLabel, heroDefense), gbc);
+        this.add(getPanel(heroWeaponLabel, heroWeapon), gbc);
         gbc.insets = new Insets(5,5,5,5);
 
         mapPane.setEditable(false);
@@ -131,6 +134,9 @@ public class GameViewGUI extends JPanel implements GameView {
         heroAttack.validate();
         heroDefense.setText(Integer.toString(game.getHero().getDefense()));
         heroDefense.validate();
+        if (game.getHero().getWeapon() != null)
+            heroWeapon.setText(game.getHero().getWeapon().getName() + " " + game.getHero().getWeapon().getPoints());
+        heroWeapon.validate();
 
         printMap(game.getMap(), game.getHeroCoord());
     }

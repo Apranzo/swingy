@@ -2,6 +2,9 @@ package com.mrb.swingy.controller;
 
 import com.mrb.swingy.exception.HeroValidationException;
 import com.mrb.swingy.model.Game;
+import com.mrb.swingy.model.artifact.Armor;
+import com.mrb.swingy.model.artifact.Helm;
+import com.mrb.swingy.model.artifact.Weapon;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.HeroBuilder;
 import com.mrb.swingy.model.character.HeroFactory;
@@ -33,7 +36,10 @@ public class SelectHeroController {
                 "XP: " + hero.get(3) + "\n" +
                 "Attack: " + hero.get(4) + "\n" +
                 "Defense: " + hero.get(5) + "\n" +
-                "HP: " + hero.get(6));
+                "HP: " + hero.get(6) + "\n" +
+                "Weapon: " + hero.get(8) + "\n" +
+                "Helm: " + hero.get(10) + "\n" +
+                "Armor: " + hero.get(12));
     }
 
     public String[] getListData(){
@@ -58,6 +64,12 @@ public class SelectHeroController {
             builder.setDefense(Integer.parseInt(heroDb.get(5)));
             builder.setHitPoints(Integer.parseInt(heroDb.get(6)));
             builder.setId(Integer.parseInt(heroDb.get(7)));
+            if (heroDb.get(8) != null)
+                builder.setWeapon(new Weapon(heroDb.get(8), Integer.parseInt(heroDb.get(9))));
+            if (heroDb.get(10) != null)
+                builder.setHelm(new Helm(heroDb.get(10), Integer.parseInt(heroDb.get(11))));
+            if (heroDb.get(12) != null)
+                builder.setArmor(new Armor(heroDb.get(12), Integer.parseInt(heroDb.get(13))));
             hero = builder.getHero();
             hero.validateHero();
         } catch (HeroValidationException e){
