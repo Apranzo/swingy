@@ -1,7 +1,14 @@
 package com.mrb.swingy.util;
 
+import com.mrb.swingy.model.artifact.Armor;
+import com.mrb.swingy.model.artifact.Helm;
+import com.mrb.swingy.model.artifact.Weapon;
+import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.model.character.HeroBuilder;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by chvs on 22.06.2018.
@@ -77,52 +84,65 @@ public class DataBase {
         return arrayList;
     }
 
-    public static ArrayList<String> selectById(int id){
-        String sqlQuery = "SELECT * FROM heroes WHERE id=?";
-        ArrayList<String> arrayList = new ArrayList<>();
+    public static Hero selectHeroById(int id){
+        String sqlQuery = "SELECT * FROM heroes WHERE id = ?";
+        Hero hero = null;
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
-
             pstmt.setInt(1,id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                arrayList.add(rs.getString("name"));
-                arrayList.add(rs.getString("class"));
-                arrayList.add(Integer.toString(rs.getInt("level")));
-                arrayList.add(Integer.toString(rs.getInt("xp")));
-                arrayList.add(Integer.toString(rs.getInt("attack")));
-                arrayList.add(Integer.toString(rs.getInt("defense")));
-                arrayList.add(Integer.toString(rs.getInt("hp")));
-                arrayList.add(Integer.toString(rs.getInt("id")));
-                arrayList.add(rs.getString("weapon_name"));
-                arrayList.add(Integer.toString(rs.getInt("weapon_value")));
-                arrayList.add(rs.getString("helm_name"));
-                arrayList.add(Integer.toString(rs.getInt("helm_value")));
-                arrayList.add(rs.getString("armor_name"));
-                arrayList.add(Integer.toString(rs.getInt("armor_value")));
+                HeroBuilder builder = new HeroBuilder();
+                builder.setId(rs.getInt("id"));
+                builder.setName(rs.getString("name"));
+                builder.setHeroClass(rs.getString("class"));
+                builder.setLevel(rs.getInt("level"));
+                builder.setExperience(rs.getInt("xp"));
+                builder.setAttack(rs.getInt("attack"));
+                builder.setDefense(rs.getInt("defense"));
+                builder.setHitPoints(rs.getInt("hp"));
+
+                if (rs.getString("weapon_name") != null)
+                    builder.setWeapon(new Weapon(rs.getString("weapon_name"), rs.getInt("weapon_value")));
+                if (rs.getString("helm_name") != null)
+                    builder.setHelm(new Helm(rs.getString("helm_name"), rs.getInt("helm_value")));
+                if (rs.getString("armor_name") != null)
+                    builder.setArmor(new Armor(rs.getString("armor_name"), rs.getInt("armor_value")));
+
+                hero = builder.getHero();
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        return arrayList;
+        return hero;
     }
 
-    public static void update(int id, int level, int xp, int attack, int defense, int hp, String weaponName, int weaponPoints, String helmName, int helmPoints, String armorName, int armorPoints){
-        String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? , weapon_name = ?, weapon_value = ?, helm_name = ?, helm_value = ?, armor_name = ?, armor_value = ? WHERE id = ?";
+    public static void updateHero(Hero hero){
+        String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? , " +
+                "weapon_name = ?, weapon_value = ?, helm_name = ?, helm_value = ?, armor_name = ?, armor_value = ? " +
+                "WHERE id = ?";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
-            pstmt.setInt(1, level);
-            pstmt.setInt(2, xp);
-            pstmt.setInt(3, attack);
-            pstmt.setInt(4, defense);
-            pstmt.setInt(5, hp);
-            pstmt.setString(6, weaponName);
-            pstmt.setInt(7, weaponPoints);
-            pstmt.setString(8, helmName);
-            pstmt.setInt(9, helmPoints);
-            pstmt.setString(10, armorName);
-            pstmt.setInt(11, armorPoints);
-            pstmt.setInt(12, id);
+            pstmt.setInt(1, hero.getLevel());
+            pstmt.setInt(2, hero.getExperience());
+            pstmt.setInt(3, hero.getAttack());
+            pstmt.setInt(4, hero.getDefense());
+            pstmt.setInt(5, hero.getHitPoints());
+
+            if (hero.getWeapon() != null) {
+                pstmt.setString(6, hero.getWeapon().getName());
+                pstmt.setInt(7, hero.getWeapon().getPoints());
+            }
+            if (hero.getHelm() != null) {
+                pstmt.setString(8, hero.getHelm().getName());
+                pstmt.setInt(9, hero.getHelm().getPoints());
+            }
+            if (hero.getArmor() != null) {
+                pstmt.setString(10, hero.getArmor().getName());
+                pstmt.setInt(11, hero.getArmor().getPoints());
+            }
+
+            pstmt.setInt(12, hero.getId());
 
             pstmt.executeUpdate();
         } catch (SQLException e){

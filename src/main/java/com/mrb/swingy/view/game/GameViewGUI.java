@@ -19,23 +19,7 @@ public class GameViewGUI extends JPanel implements GameView {
     private JComboBox<String> directionsComboBox = new JComboBox<>(directions);
     private JButton moveButton = new JButton("Move");
 
-    private JLabel heroNameLabel = new JLabel("Name: ");
-    private JLabel heroName = new JLabel("");
-    private JLabel heroCoordLabel = new JLabel("Position: ");
-    private JLabel heroCoord = new JLabel("");
-    private JLabel heroLevelLabel = new JLabel("Level: ");
-    private JLabel heroLevel = new JLabel("");
-    private JLabel heroXPLabel = new JLabel("XP: ");
-    private JLabel heroXP = new JLabel("");
-    private JLabel heroHPLabel = new JLabel("HP: ");
-    private JLabel heroHP = new JLabel("");
-    private JLabel heroAttackLabel = new JLabel("Attack: ");
-    private JLabel heroAttack = new JLabel("");
-    private JLabel heroDefenseLabel = new JLabel("Defense: ");
-    private JLabel heroDefense = new JLabel("");
-    private JLabel heroWeaponLabel = new JLabel("Weapon: ");
-    private JLabel heroWeapon = new JLabel("");
-
+    private JEditorPane infoPane = new JEditorPane();
     private JEditorPane mapPane = new JEditorPane();
 
     private GameController controller;
@@ -58,14 +42,11 @@ public class GameViewGUI extends JPanel implements GameView {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        this.add(getPanel(heroNameLabel, heroName), gbc);
-        this.add(getPanel(heroCoordLabel, heroCoord), gbc);
-        this.add(getPanel(heroLevelLabel, heroLevel), gbc);
-        this.add(getPanel(heroXPLabel, heroXP), gbc);
-        this.add(getPanel(heroHPLabel, heroHP), gbc);
-        this.add(getPanel(heroAttackLabel, heroAttack), gbc);
-        this.add(getPanel(heroDefenseLabel, heroDefense), gbc);
-        this.add(getPanel(heroWeaponLabel, heroWeapon), gbc);
+        infoPane.setEditable(false);
+        infoPane.setText("Select hero to see information");
+        infoPane.setPreferredSize(new Dimension(300, 300));
+        infoPane.setMinimumSize(new Dimension(200, 200));
+        this.add(infoPane);
         gbc.insets = new Insets(5,5,5,5);
 
         mapPane.setEditable(false);
@@ -92,14 +73,6 @@ public class GameViewGUI extends JPanel implements GameView {
         });
     }
 
-    private JPanel getPanel(JLabel first, JLabel second){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panel.add(first);
-        panel.add(second);
-        return panel;
-    }
-
     @Override
     public void printMap(boolean[][] map, Point heroCoord) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -120,23 +93,9 @@ public class GameViewGUI extends JPanel implements GameView {
 
     @Override
     public void update(Game game) {
-        heroName.setText(game.getHero().getName());
-        heroName.validate();
-        heroCoord.setText("(" + game.getHeroCoord().getX() + "," + game.getHeroCoord().getY() + ")");
-        heroCoord.validate();
-        heroLevel.setText(Integer.toString(game.getHero().getLevel()));
-        heroLevel.validate();
-        heroXP.setText(Integer.toString(game.getHero().getExperience()));
-        heroXP.validate();
-        heroHP.setText(Integer.toString(game.getHero().getHitPoints()));
-        heroHP.validate();
-        heroAttack.setText(Integer.toString(game.getHero().getAttack()));
-        heroAttack.validate();
-        heroDefense.setText(Integer.toString(game.getHero().getDefense()));
-        heroDefense.validate();
-        if (game.getHero().getWeapon() != null)
-            heroWeapon.setText(game.getHero().getWeapon().getName() + " " + game.getHero().getWeapon().getPoints());
-        heroWeapon.validate();
+        infoPane.setText(game.getHero().toString() +
+                "Position: " + "(" + game.getHeroCoord().getX() +
+                "," + game.getHeroCoord().getY() + ")");
 
         printMap(game.getMap(), game.getHeroCoord());
     }

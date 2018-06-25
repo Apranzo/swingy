@@ -123,4 +123,35 @@ public class Hero extends Character {
     public void setHeroClass(String heroClass) {
         this.heroClass = heroClass;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append("\n");
+        sb.append("Class: ").append(heroClass).append("\n");
+        sb.append("Level: ").append(level).append("\n");
+        sb.append("XP: ").append(experience).append("\n");
+        sb.append("Attack: ").append(attack).append("\n");
+        sb.append("Defense: ").append(defense).append("\n");
+        sb.append("HP: ").append(hitPoints).append("\n");
+
+        sb.append("Weapon: ");
+        if (weapon != null)
+            sb.append(weapon.getName()).append(" (attack +").append(weapon.getPoints()).append(")\n");
+        else
+            sb.append(" no weapon\n");
+
+        sb.append("Helm: ");
+        if (helm != null)
+            sb.append(helm.getName()).append(" (hp +").append(helm.getPoints()).append(")\n");
+        else
+            sb.append(" no helmet\n");
+
+        sb.append("Armor: ");
+        if (armor != null)
+            sb.append(armor.getName()).append(" (defense +").append(armor.getPoints()).append(")\n");
+        else
+            sb.append(" no armor\n");
+        return sb.toString();
+    }
 }
