@@ -105,13 +105,22 @@ public class GameController {
         {
             System.out.println("Artifact!!!");
             if (artifact instanceof Weapon) {
-                game.getHero().setWeapon((Weapon) artifact);
+                if (game.getHero().getWeapon() == null || view.replaceArtifact("your weapon: " + game.getHero().getWeapon() + ", found: " + artifact)){
+                    game.getHero().equipWeapon((Weapon) artifact);
+                    System.out.println("replaced");
+                }
                 System.out.println("Weapon");
             } else if (artifact instanceof Helm){
-                game.getHero().setHelm((Helm) artifact);
+                if (game.getHero().getHelm() == null || view.replaceArtifact("your helmet: " + game.getHero().getHelm() + ", found: " + artifact)){
+                    game.getHero().equipHelm((Helm) artifact);
+                    System.out.println("replaced");
+                }
                 System.out.println("Helm");
             } else if (artifact instanceof Armor){
-                game.getHero().setArmor((Armor) artifact);
+                if (game.getHero().getArmor() == null || view.replaceArtifact("your armor: " + game.getHero().getArmor() + ", found: " + artifact)){
+                    game.getHero().equipArmor((Armor) artifact);
+                    System.out.println("replaced");
+                }
                 System.out.println("Armor");
             }
         }

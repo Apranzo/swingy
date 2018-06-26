@@ -3,6 +3,7 @@ package com.mrb.swingy.model.character;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by chvs on 18.06.2018.
@@ -33,6 +34,9 @@ public abstract class Character {
         if (this.attack > opponent.defense){
             System.out.println(opponent.getName() + " attacked");
             opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
+        } else if (ThreadLocalRandom.current().nextInt(0, 10) <= 2){
+            System.out.println(opponent.getName() + " attacked by LUCK");
+            opponent.setHitPoints(opponent.getHitPoints() - this.attack);
         }
     }
 

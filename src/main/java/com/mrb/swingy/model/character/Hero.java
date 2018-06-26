@@ -75,6 +75,34 @@ public class Hero extends Character {
         }
     }
 
+    public void equipWeapon(Weapon weapon){
+        if (this.weapon != null){
+            this.attack -= this.weapon.getPoints();
+        }
+        this.attack += weapon.getPoints();
+        this.weapon = weapon;
+    }
+
+    public void equipHelm(Helm helm){
+        if (this.helm != null){
+            this.hitPoints -= this.helm.getPoints();
+            if (this.hitPoints + helm.getPoints() <= 0){
+                this.hitPoints += this.helm.getPoints();
+                return;
+            }
+        }
+        this.hitPoints += helm.getPoints();
+        this.helm = helm;
+    }
+
+    public void equipArmor(Armor armor){
+        if (this.armor != null){
+            this.defense -= this.armor.getPoints();
+        }
+        this.defense += armor.getPoints();
+        this.armor = armor;
+    }
+
     public Weapon getWeapon() {
         return weapon;
     }

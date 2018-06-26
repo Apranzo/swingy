@@ -75,11 +75,11 @@ public class Game {
 
         Artifact artifact = null;
         if (rand == 0)
-            artifact = new Weapon("Sword", 10);
+            artifact = new Weapon("Sword", ThreadLocalRandom.current().nextInt(1,5 * (hero.getLevel() + 1)));
         else if (rand == 1)
-            artifact = new Helm("Helmet", 5);
+            artifact = new Helm("Pot", ThreadLocalRandom.current().nextInt(1,3 * (hero.getLevel() + 1)));
         else if (rand == 2)
-            artifact = new Armor("Armor", 8);
+            artifact = new Armor("Shield", ThreadLocalRandom.current().nextInt(1,4 * (hero.getLevel() + 1)));
         return artifact;
     }
 

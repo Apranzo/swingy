@@ -95,4 +95,24 @@ public class GameViewConsole implements GameView {
         }
 //        scanner.close();
     }
+
+    @Override
+    public boolean replaceArtifact(String replaceMessage) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Would you like to replace " + replaceMessage + "?");
+        System.out.println("Command(LEAVE, REPLACE):");
+        while (scanner.hasNext()) {
+            String input = scanner.nextLine();
+
+            if ("leave".equalsIgnoreCase(input)) {
+                return false;
+            } else if ("replace".equalsIgnoreCase(input)) {
+                return true;
+            } else {
+                System.out.println("Unknown command");
+            }
+        }
+//        scanner.close();
+        return false;
+    }
 }

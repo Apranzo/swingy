@@ -20,4 +20,9 @@ public abstract class Artifact {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return name + " (+" + points + ")";
+    }
 }

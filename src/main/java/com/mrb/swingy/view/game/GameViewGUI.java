@@ -121,4 +121,12 @@ public class GameViewGUI extends JPanel implements GameView {
         else
             controller.onRun();
     }
+
+    @Override
+    public boolean replaceArtifact(String replaceMessage) {
+        Object options[] = {"Replace", "Leave"};
+
+        int result = JOptionPane.showOptionDialog(Main.getFrame(), "Would you like to replace " + replaceMessage + "?", "Replace or leave?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        return result == JOptionPane.YES_OPTION;
+    }
 }
