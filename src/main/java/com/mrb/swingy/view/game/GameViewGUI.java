@@ -18,6 +18,7 @@ public class GameViewGUI extends JPanel implements GameView {
     private String[] directions = {"North", "East", "South", "West"};
     private JComboBox<String> directionsComboBox = new JComboBox<>(directions);
     private JButton moveButton = new JButton("Move");
+    private JButton switchButton = new JButton("Switch");
 
     private JEditorPane infoPane = new JEditorPane();
     private JEditorPane mapPane = new JEditorPane();
@@ -59,6 +60,7 @@ public class GameViewGUI extends JPanel implements GameView {
         directionsComboBox.setSelectedIndex(0);
         this.add(directionsComboBox, gbc);
         this.add(moveButton, gbc);
+        this.add(switchButton, gbc);
 
         this.setVisible(true);
         Main.getFrame().setContentPane(this);
@@ -69,6 +71,12 @@ public class GameViewGUI extends JPanel implements GameView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onMove((String)directionsComboBox.getSelectedItem());
+            }
+        });
+        switchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onSwitchButtonPressed();
             }
         });
     }
@@ -129,5 +137,11 @@ public class GameViewGUI extends JPanel implements GameView {
 
         int result = JOptionPane.showOptionDialog(Main.getFrame(), "Would you like to replace " + replaceMessage + "?", "Replace or leave?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         return result == JOptionPane.YES_OPTION;
+    }
+
+    @Override
+    public void switchView() {
+        Main.hideFrame();
+        new GameViewConsole().start();
     }
 }

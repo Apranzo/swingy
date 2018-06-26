@@ -15,4 +15,5 @@ public interface GameView {
     void showMessage(String message);
     void getVillainCollisionInput();
     boolean replaceArtifact(String replaceMessage);
+    void switchView();
 }

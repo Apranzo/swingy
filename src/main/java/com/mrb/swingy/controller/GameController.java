@@ -146,4 +146,8 @@ public class GameController {
         if (level != game.getHero().getLevel())
             view.showMessage("Level UP!\nHP, attack and defense were increased!");
     }
+
+    public void onSwitchButtonPressed(){
+        view.switchView();
+    }
 }

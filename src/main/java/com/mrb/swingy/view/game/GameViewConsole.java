@@ -32,7 +32,7 @@ public class GameViewConsole implements GameView {
 
     private void getUserInput() {
         Scanner scanner = Main.getScanner();
-        System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST):");
+        System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST, SWITCH):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
@@ -45,7 +45,11 @@ public class GameViewConsole implements GameView {
                     "west".equalsIgnoreCase(input)) {
                 controller.onMove(input);
                 break;
-            } else {
+            } else if ("switch".equalsIgnoreCase(input)){
+                controller.onSwitchButtonPressed();
+                break;
+            }
+            else {
                 System.out.println("Unknown command");
             }
         }
@@ -116,5 +120,10 @@ public class GameViewConsole implements GameView {
             }
         }
         return false;
+    }
+
+    @Override
+    public void switchView() {
+        new GameViewGUI().start();
     }
 }
