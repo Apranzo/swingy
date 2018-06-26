@@ -48,4 +48,8 @@ public class SelectHeroController {
         game.initGame(hero);
         view.openGame();
     }
+
+    public void onCreateButtonPressed(){
+        view.openCreateHero();
+    }
 }

@@ -24,7 +24,9 @@ public class GameViewConsole implements GameView {
 
     @Override
     public void update(Game game) {
-
+        System.out.println(game.getHero().toString() +
+                "Position: " + "(" + game.getHeroCoord().getX() +
+                "," + game.getHeroCoord().getY() + ")");
         getUserInput();
     }
 

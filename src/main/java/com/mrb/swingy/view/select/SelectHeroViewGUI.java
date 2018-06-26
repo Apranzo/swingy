@@ -2,6 +2,7 @@ package com.mrb.swingy.view.select;
 
 import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.SelectHeroController;
+import com.mrb.swingy.view.create.CreateHeroViewGUI;
 import com.mrb.swingy.view.game.GameViewGUI;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
 
     private JEditorPane infoPane = new JEditorPane();
     private JButton selectButton = new JButton("Select");
+    private JButton createButton = new JButton("Create");
 
     private SelectHeroController controller;
     private int lastSelectedIdx;
@@ -58,6 +60,7 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
         this.add(infoScroll);
 
         this.add(selectButton);
+        this.add(createButton);
         selectButton.setEnabled(false);
 
         this.setVisible(true);
@@ -86,6 +89,12 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
                 controller.onSelectButtonPressed(lastSelectedIdx);
             }
         });
+        createButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onCreateButtonPressed();
+            }
+        });
     }
 
     @Override
@@ -102,5 +111,11 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
     public void openGame() {
         this.setVisible(false);
         new GameViewGUI().start();
+    }
+
+    @Override
+    public void openCreateHero() {
+        this.setVisible(false);
+        new CreateHeroViewGUI().start();
     }
 }

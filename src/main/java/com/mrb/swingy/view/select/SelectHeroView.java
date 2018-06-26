@@ -9,4 +9,5 @@ public interface SelectHeroView {
     void updateInfo(String info);
     void showErrorMessage(String message);
     void openGame();
+    void openCreateHero();
 }
