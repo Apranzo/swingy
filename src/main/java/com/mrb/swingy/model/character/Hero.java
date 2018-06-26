@@ -103,6 +103,22 @@ public class Hero extends Character {
         this.armor = armor;
     }
 
+    public void addExperience(int addXP){
+        int nextLevel = (level + 1) * 1000 + level * level * 450;
+        System.out.println("Next level: " + nextLevel);
+
+        if (experience + addXP >= nextLevel)
+            levelUp();
+        experience += addXP;
+    }
+
+    private void levelUp(){
+        level++;
+        hitPoints += 50 + level * 10;
+        attack += level * 3;
+        defense += level * 2;
+    }
+
     public Weapon getWeapon() {
         return weapon;
     }
@@ -140,7 +156,6 @@ public class Hero extends Character {
     }
 
     public void setExperience(int experience) {
-        //todo: check hero level up
         this.experience = experience;
     }
 

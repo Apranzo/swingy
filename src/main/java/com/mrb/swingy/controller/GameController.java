@@ -74,9 +74,9 @@ public class GameController {
     }
 
     private void winGame(){
-        game.getHero().setExperience(game.getHero().getExperience() + game.getMapSize() * 100);
-        updateDataBase();
         view.showMessage("You win! And got additional " + game.getMapSize() * 100 + "xp!");
+        addExperience(game.getMapSize() * 100);
+        updateDataBase();
         view.gameFinished();
     }
 
@@ -131,12 +131,19 @@ public class GameController {
         int xp = game.fightResult(villain);
         if (xp >= 0) {
             view.showMessage("You win, and got " + xp + "xp.");
-            game.getHero().setExperience(game.getHero().getExperience() + xp);
+            addExperience(xp);
             game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;
             setArtifact(villain.getArtifact());
         } else{
             view.showMessage("Game over :(");
             view.gameFinished();
         }
+    }
+
+    private void addExperience(int addXP){
+        int level = game.getHero().getLevel();
+        game.getHero().addExperience(addXP);
+        if (level != game.getHero().getLevel())
+            view.showMessage("Level UP!\nHP, attack and defense were increased!");
     }
 }

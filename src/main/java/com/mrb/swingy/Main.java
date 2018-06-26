@@ -56,7 +56,7 @@ public class Main {
     public static void closeConnections(){
         System.out.println("Close connections!");
         DataBase.close();
-        scanner.close();
+        getScanner().close();
     }
 
 
