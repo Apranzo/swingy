@@ -59,6 +59,8 @@ public class SelectHeroViewConsole implements SelectHeroView {
     }
 
     private void printHeroes(String[] heroes){
+        if (heroes.length == 0)
+            System.out.println("No saved heroes");
         for (String hero: heroes) {
             System.out.println(hero);
         }

@@ -54,6 +54,8 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
 
         infoPane.setEditable(false);
         infoPane.setText("Select hero to see information");
+        if (data.length == 0)
+            infoPane.setText("No saved heroes");
         JScrollPane infoScroll = new JScrollPane(infoPane);
         infoScroll.setPreferredSize(new Dimension(200, 200));
         infoScroll.setMinimumSize(new Dimension(150, 150));
