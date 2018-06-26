@@ -19,7 +19,7 @@ public class StartViewConsole implements StartView{
         System.out.println("Start View Console");
         controller = new StartController(this);
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.getScanner();
         System.out.println("Command(CREATE, SELECT, SWITCH):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
@@ -38,7 +38,6 @@ public class StartViewConsole implements StartView{
                 System.out.println("Unknown command");
             }
         }
-        scanner.close();
     }
 
     @Override

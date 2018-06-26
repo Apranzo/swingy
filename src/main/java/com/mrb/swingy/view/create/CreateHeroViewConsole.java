@@ -1,5 +1,6 @@
 package com.mrb.swingy.view.create;
 
+import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.CreateHeroController;
 import com.mrb.swingy.view.game.GameViewConsole;
 
@@ -22,7 +23,7 @@ public class CreateHeroViewConsole implements CreateHeroView{
 
     @Override
     public void getUserInput() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.getScanner();
 
         System.out.println("To create hero enter his name and class.");
         System.out.println("Name:");
@@ -42,7 +43,6 @@ public class CreateHeroViewConsole implements CreateHeroView{
                 System.out.println("Unknown command");
             }
         }
-        scanner.close();
     }
 
     @Override

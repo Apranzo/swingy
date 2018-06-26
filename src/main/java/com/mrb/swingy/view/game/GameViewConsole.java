@@ -1,5 +1,6 @@
 package com.mrb.swingy.view.game;
 
+import com.mrb.swingy.Main;
 import com.mrb.swingy.controller.GameController;
 import com.mrb.swingy.model.Game;
 import com.mrb.swingy.util.Point;
@@ -28,7 +29,7 @@ public class GameViewConsole implements GameView {
     }
 
     private void getUserInput() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.getScanner();
         System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
@@ -46,7 +47,6 @@ public class GameViewConsole implements GameView {
                 System.out.println("Unknown command");
             }
         }
-        scanner.close();
     }
 
     @Override
@@ -69,6 +69,8 @@ public class GameViewConsole implements GameView {
     @Override
     public void gameFinished() {
         System.out.println("See you!");
+        Main.getFrame().dispose();
+        Main.closeConnections();
     }
 
     @Override
@@ -78,7 +80,7 @@ public class GameViewConsole implements GameView {
 
     @Override
     public void getVillainCollisionInput() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.getScanner();
         System.out.println("Command(FIGHT, RUN):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
@@ -93,12 +95,11 @@ public class GameViewConsole implements GameView {
                 System.out.println("Unknown command");
             }
         }
-//        scanner.close();
     }
 
     @Override
     public boolean replaceArtifact(String replaceMessage) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.getScanner();
         System.out.println("Would you like to replace " + replaceMessage + "?");
         System.out.println("Command(LEAVE, REPLACE):");
         while (scanner.hasNext()) {
@@ -112,7 +113,6 @@ public class GameViewConsole implements GameView {
                 System.out.println("Unknown command");
             }
         }
-//        scanner.close();
         return false;
     }
 }

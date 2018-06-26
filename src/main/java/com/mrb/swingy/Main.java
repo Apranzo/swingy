@@ -5,10 +5,14 @@ import com.mrb.swingy.view.start.StartViewConsole;
 import com.mrb.swingy.view.start.StartViewGUI;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Scanner;
 
 public class Main {
 
     private static JFrame frame;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         if (args.length != 1 || (!args[0].equals("console") && !args[0].equals("gui"))){
@@ -16,18 +20,18 @@ public class Main {
             System.exit(1);
         }
         DataBase.connect();
+        frameListener();
         if (args[0].equals("console"))
             new StartViewConsole().start();
         else if (args[0].equals("gui")){
             new StartViewGUI().start();
         }
-        DataBase.close();
     }
 
     public static JFrame getFrame(){
         if (frame == null) {
             frame = new JFrame();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.setSize(500, 500);
         }
         return frame;
@@ -41,5 +45,28 @@ public class Main {
     public static void hideFrame(){
         if (frame != null)
             frame.setVisible(false);
+    }
+
+    public static Scanner getScanner(){
+        if (scanner == null)
+            scanner = new Scanner(System.in);
+        return scanner;
+    }
+
+    public static void closeConnections(){
+        System.out.println("Close connections!");
+        DataBase.close();
+        scanner.close();
+    }
+
+
+    private static void frameListener(){
+        getFrame().addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeConnections();
+                super.windowClosing(e);
+            }
+        });
     }
 }

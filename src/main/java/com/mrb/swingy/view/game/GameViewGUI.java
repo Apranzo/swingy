@@ -104,6 +104,7 @@ public class GameViewGUI extends JPanel implements GameView {
     public void gameFinished() {
         Main.hideFrame();
         Main.getFrame().dispose();
+        Main.closeConnections();
     }
 
     @Override
