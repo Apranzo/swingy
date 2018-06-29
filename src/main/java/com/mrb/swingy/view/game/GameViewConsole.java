@@ -28,15 +28,17 @@ public class GameViewConsole implements GameView {
                 "Position: " + "(" + game.getHeroCoord().getX() +
                 "," + game.getHeroCoord().getY() + ")");
         System.out.println("------------------------");
+
         getUserInput();
     }
 
     private void getUserInput() {
         Scanner scanner = Main.getScanner();
+
         System.out.println("NORTH, EAST, SOUTH, WEST - to move to this direction");
         System.out.println("SWITCH - to switch to GUI view");
         System.out.println("Commands (NORTH, EAST, SOUTH, WEST, SWITCH):");
-        while (scanner != null && scanner.hasNext()) {
+        while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
             if ("map".equalsIgnoreCase(input)) {
@@ -48,18 +50,17 @@ public class GameViewConsole implements GameView {
                     "west".equalsIgnoreCase(input)) {
                 controller.onMove(input);
                 break;
-            } else if ("switch".equalsIgnoreCase(input)){
+            } else if ("switch".equalsIgnoreCase(input)) {
                 controller.onSwitchButtonPressed();
                 break;
-            }
-            else {
+            } else {
                 System.out.println("Unknown command");
             }
         }
     }
 
     @Override
-    public void printMap(boolean [][] map, Point heroCoord){
+    public void printMap(boolean[][] map, Point heroCoord) {
         System.out.printf("MAP %dx%d", map.length, map.length);
         System.out.println();
         for (int i = 0; i < map.length; i++) {
@@ -90,6 +91,7 @@ public class GameViewConsole implements GameView {
     @Override
     public void getVillainCollisionInput() {
         Scanner scanner = Main.getScanner();
+
         System.out.println();
         System.out.println("You moved to position occupied by villain");
         System.out.println("FIGHT - to fight with villain");
@@ -113,6 +115,7 @@ public class GameViewConsole implements GameView {
     @Override
     public boolean replaceArtifact(String replaceMessage) {
         Scanner scanner = Main.getScanner();
+
         System.out.println();
         System.out.println("Would you like to replace " + replaceMessage + "?");
         System.out.println("LEAVE - to leave your artifact");

@@ -15,20 +15,21 @@ public class Main {
     private static Scanner scanner;
 
     public static void main(String[] args) {
-        if (args.length != 1 || (!args[0].equals("console") && !args[0].equals("gui"))){
+        if (args.length != 1 || (!args[0].equals("console") && !args[0].equals("gui"))) {
             System.out.println("Usage: program console | gui");
             System.exit(1);
         }
+
         DataBase.connect();
         frameListener();
+
         if (args[0].equals("console"))
             new StartViewConsole().start();
-        else if (args[0].equals("gui")){
+        else if (args[0].equals("gui"))
             new StartViewGUI().start();
-        }
     }
 
-    public static JFrame getFrame(){
+    public static JFrame getFrame() {
         if (frame == null) {
             frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,30 +38,30 @@ public class Main {
         return frame;
     }
 
-    public static void showFrame(){
+    public static void showFrame() {
         if (frame != null)
             frame.setVisible(true);
     }
 
-    public static void hideFrame(){
+    public static void hideFrame() {
         if (frame != null)
             frame.setVisible(false);
     }
 
-    public static Scanner getScanner(){
+    public static Scanner getScanner() {
         if (scanner == null)
             scanner = new Scanner(System.in);
         return scanner;
     }
 
-    public static void closeConnections(){
+    public static void closeConnections() {
         DataBase.close();
         if (scanner != null)
             scanner.close();
     }
 
 
-    private static void frameListener(){
+    private static void frameListener() {
         getFrame().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

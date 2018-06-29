@@ -13,15 +13,15 @@ public class StartController {
         this.view = view;
     }
 
-    public void onCreateHeroButtonPressed(){
+    public void onCreateHeroButtonPressed() {
         view.openCreateHero();
     }
 
-    public void onSwitchButtonPressed(){
+    public void onSwitchButtonPressed() {
         view.switchView();
     }
 
-    public void onSelectHeroButtonPressed(){
+    public void onSelectHeroButtonPressed() {
         view.openSelectHero();
     }
 }

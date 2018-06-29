@@ -27,7 +27,6 @@ public class GameViewGUI extends JPanel implements GameView {
 
     @Override
     public void start() {
-        System.out.println("Game View GUI");
         controller = new GameController(this);
 
         buildUI();

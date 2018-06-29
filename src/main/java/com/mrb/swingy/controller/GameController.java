@@ -22,28 +22,28 @@ public class GameController {
     private Game game;
     private Point previousPosition;
 
-    public GameController(GameView view){
+    public GameController(GameView view) {
         this.view = view;
         game = Game.getInstance();
-        previousPosition = new Point(0,0);
+        previousPosition = new Point(0, 0);
     }
 
-    public void onStart(){
+    public void onStart() {
         view.update(game);
     }
 
-    public void onPrintMap(){
+    public void onPrintMap() {
         view.printMap(game.getMap(), game.getHeroCoord());
         view.update(game);
     }
 
-    public void onMove(String direction){
+    public void onMove(String direction) {
         int x = game.getHeroCoord().getX();
         int y = game.getHeroCoord().getY();
         previousPosition.setX(x);
         previousPosition.setY(y);
 
-        switch (direction.toUpperCase()){
+        switch (direction.toUpperCase()) {
             case "NORTH":
                 y--;
                 break;
@@ -66,7 +66,7 @@ public class GameController {
         game.getHeroCoord().setX(x);
         game.getHeroCoord().setY(y);
 
-        if (game.getMap()[y][x]){
+        if (game.getMap()[y][x]) {
             villainCollision();
         }
 
@@ -74,24 +74,24 @@ public class GameController {
             view.update(game);
     }
 
-    private void winGame(){
+    private void winGame() {
         view.showMessage("You win! And got additional " + game.getMapSize() * 100 + "xp!");
         addExperience(game.getMapSize() * 100);
         updateDataBase();
         view.gameFinished();
     }
 
-    private void updateDataBase(){
+    private void updateDataBase() {
         Hero hero = game.getHero();
         DataBase.updateHero(hero);
     }
 
-    private void villainCollision(){
+    private void villainCollision() {
         view.getVillainCollisionInput();
     }
 
-    public void onRun(){
-        if (new Random().nextBoolean()){
+    public void onRun() {
+        if (new Random().nextBoolean()) {
             view.showMessage("You are lucky! And moved to previous position!");
             game.getHeroCoord().setX(previousPosition.getX());
             game.getHeroCoord().setY(previousPosition.getY());
@@ -101,21 +101,20 @@ public class GameController {
         }
     }
 
-    private void setArtifact(Artifact artifact){
-        if (artifact != null)
-        {
+    private void setArtifact(Artifact artifact) {
+        if (artifact != null) {
             if (artifact instanceof Weapon) {
-                if (game.getHero().getWeapon() == null || view.replaceArtifact("your weapon: " + game.getHero().getWeapon() + ", found: " + artifact)){
+                if (game.getHero().getWeapon() == null || view.replaceArtifact("your weapon: " + game.getHero().getWeapon() + ", found: " + artifact)) {
                     game.getHero().equipWeapon((Weapon) artifact);
                     view.showMessage("You equipped new weapon: " + artifact);
                 }
-            } else if (artifact instanceof Helm){
-                if (game.getHero().getHelm() == null || view.replaceArtifact("your helmet: " + game.getHero().getHelm() + ", found: " + artifact)){
+            } else if (artifact instanceof Helm) {
+                if (game.getHero().getHelm() == null || view.replaceArtifact("your helmet: " + game.getHero().getHelm() + ", found: " + artifact)) {
                     game.getHero().equipHelm((Helm) artifact);
                     view.showMessage("You equipped new helm: " + artifact);
                 }
-            } else if (artifact instanceof Armor){
-                if (game.getHero().getArmor() == null || view.replaceArtifact("your armor: " + game.getHero().getArmor() + ", found: " + artifact)){
+            } else if (artifact instanceof Armor) {
+                if (game.getHero().getArmor() == null || view.replaceArtifact("your armor: " + game.getHero().getArmor() + ", found: " + artifact)) {
                     game.getHero().equipArmor((Armor) artifact);
                     view.showMessage("You equipped new armor: " + artifact);
                 }
@@ -123,7 +122,7 @@ public class GameController {
         }
     }
 
-    public void onFight(){
+    public void onFight() {
         Villain villain = game.generateVillain();
         int xp = game.fightResult(villain);
         if (xp >= 0) {
@@ -131,20 +130,20 @@ public class GameController {
             addExperience(xp);
             game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;
             setArtifact(villain.getArtifact());
-        } else{
+        } else {
             view.showMessage("Game over :(");
             view.gameFinished();
         }
     }
 
-    private void addExperience(int addXP){
+    private void addExperience(int addXP) {
         int level = game.getHero().getLevel();
         game.getHero().addExperience(addXP);
         if (level != game.getHero().getLevel())
             view.showMessage("Level UP!\nHP, attack and defense were increased!");
     }
 
-    public void onSwitchButtonPressed(){
+    public void onSwitchButtonPressed() {
         view.switchView();
     }
 }

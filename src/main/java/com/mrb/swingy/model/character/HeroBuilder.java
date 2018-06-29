@@ -64,7 +64,7 @@ public class HeroBuilder {
         this.experience = experience;
     }
 
-    public Hero getHero(){
+    public Hero getHero() {
         return new Hero(name, attack, defense, hitPoints, id, heroClass, level, experience, weapon, armor, helm);
     }
 }

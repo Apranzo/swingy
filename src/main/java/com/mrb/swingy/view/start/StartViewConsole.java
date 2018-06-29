@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Created by chvs on 18.06.2018.
  */
-public class StartViewConsole implements StartView{
+public class StartViewConsole implements StartView {
 
     private StartController controller;
 
@@ -25,20 +25,19 @@ public class StartViewConsole implements StartView{
         System.out.println("SELECT - to select already created hero");
         System.out.println("SWITCH - to switch to GUI view");
         System.out.println("Commands (CREATE, SELECT, SWITCH):");
-        while (scanner.hasNext()){
+        while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
-            if ("create".equalsIgnoreCase(input)){
+            if ("create".equalsIgnoreCase(input)) {
                 controller.onCreateHeroButtonPressed();
                 break;
-            } else if ("select".equalsIgnoreCase(input)){
+            } else if ("select".equalsIgnoreCase(input)) {
                 controller.onSelectHeroButtonPressed();
                 break;
-            } else if ("switch".equalsIgnoreCase(input)){
+            } else if ("switch".equalsIgnoreCase(input)) {
                 controller.onSwitchButtonPressed();
                 break;
-            }
-            else {
+            } else {
                 System.out.println("Unknown command");
             }
         }

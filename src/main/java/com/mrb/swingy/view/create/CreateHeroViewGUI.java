@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by chvs on 18.06.2018.
  */
-public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
+public class CreateHeroViewGUI extends JPanel implements CreateHeroView {
 
     private JLabel heroNameLabel = new JLabel("Hero name:");
     private JTextField heroNameField = new JTextField(10);
@@ -25,21 +25,20 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
 
     @Override
     public void start() {
-        System.out.println("Start Create Hero GUI");
         controller = new CreateHeroController(this);
 
         buildUI();
     }
 
-    private void buildUI(){
+    private void buildUI() {
         Main.getFrame().setTitle("Create Hero");
         this.setLayout(new GridBagLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         JPanel createHeroPanel = new JPanel();
         createHeroPanel.add(heroNameLabel);
@@ -52,12 +51,12 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
 
         infoPane.setEditable(false);
         infoPane.setText("           attack defense hp\n" +
-                        "Warrior    40      20      100\n" +
-                        "Shaman   30      15      90\n" +
-                        "Priest       25      25      90\n" +
-                        "Paladin    40      30      120\n" +
-                        "Mage       45      10      80\n" +
-                        "Hunter    25      20      110\n");
+                "Warrior    40      20      100\n" +
+                "Shaman   30      15      90\n" +
+                "Priest       25      25      90\n" +
+                "Paladin    40      30      120\n" +
+                "Mage       45      10      80\n" +
+                "Hunter    25      20      110\n");
         infoPane.setPreferredSize(new Dimension(200, 120));
         infoPane.setMinimumSize(new Dimension(200, 120));
         this.add(infoPane, gbc);
@@ -72,13 +71,14 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
         createHeroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onCreateButtonPressed(heroNameField.getText(), (String)classesComboBox.getSelectedItem());
+                controller.onCreateButtonPressed(heroNameField.getText(), (String) classesComboBox.getSelectedItem());
             }
         });
     }
 
     @Override
-    public void getUserInput() {}
+    public void getUserInput() {
+    }
 
     @Override
     public void showErrorMessage(String message) {

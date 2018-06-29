@@ -57,7 +57,7 @@ public class Hero extends Character {
         Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(this);
-        if (constraintViolations.size() != 0){
+        if (constraintViolations.size() != 0) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Hero validation error(s): ");
             stringBuilder.append(constraintViolations.size());
@@ -75,18 +75,18 @@ public class Hero extends Character {
         }
     }
 
-    public void equipWeapon(Weapon weapon){
-        if (this.weapon != null){
+    public void equipWeapon(Weapon weapon) {
+        if (this.weapon != null) {
             this.attack -= this.weapon.getPoints();
         }
         this.attack += weapon.getPoints();
         this.weapon = weapon;
     }
 
-    public void equipHelm(Helm helm){
-        if (this.helm != null){
+    public void equipHelm(Helm helm) {
+        if (this.helm != null) {
             this.hitPoints -= this.helm.getPoints();
-            if (this.hitPoints + helm.getPoints() <= 0){
+            if (this.hitPoints + helm.getPoints() <= 0) {
                 this.hitPoints += this.helm.getPoints();
                 return;
             }
@@ -95,15 +95,15 @@ public class Hero extends Character {
         this.helm = helm;
     }
 
-    public void equipArmor(Armor armor){
-        if (this.armor != null){
+    public void equipArmor(Armor armor) {
+        if (this.armor != null) {
             this.defense -= this.armor.getPoints();
         }
         this.defense += armor.getPoints();
         this.armor = armor;
     }
 
-    public void addExperience(int addXP){
+    public void addExperience(int addXP) {
         int nextLevel = (level + 1) * 1000 + level * level * 450;
 
         if (experience + addXP >= nextLevel)
@@ -111,7 +111,7 @@ public class Hero extends Character {
         experience += addXP;
     }
 
-    private void levelUp(){
+    private void levelUp() {
         level++;
         hitPoints += 50 + level * 10;
         attack += level * 3;

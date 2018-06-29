@@ -5,7 +5,7 @@ package com.mrb.swingy.model.character;
  */
 public class Director {
 
-    private static HeroBuilder buildNew(String name){
+    private static HeroBuilder buildNew(String name) {
         HeroBuilder builder = new HeroBuilder();
         builder.setName(name);
         builder.setLevel(0);
@@ -13,7 +13,7 @@ public class Director {
         return builder;
     }
 
-    public static Hero createWarrior(String name){
+    public static Hero createWarrior(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(40);
         builder.setDefense(20);
@@ -22,7 +22,7 @@ public class Director {
         return builder.getHero();
     }
 
-    public static Hero createShaman(String name){
+    public static Hero createShaman(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(30);
         builder.setDefense(15);
@@ -31,7 +31,7 @@ public class Director {
         return builder.getHero();
     }
 
-    public static Hero createPriest(String name){
+    public static Hero createPriest(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(25);
         builder.setDefense(25);
@@ -40,7 +40,7 @@ public class Director {
         return builder.getHero();
     }
 
-    public static Hero createPaladin(String name){
+    public static Hero createPaladin(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(40);
         builder.setDefense(30);
@@ -49,7 +49,7 @@ public class Director {
         return builder.getHero();
     }
 
-    public static Hero createMage(String name){
+    public static Hero createMage(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(45);
         builder.setDefense(10);
@@ -58,7 +58,7 @@ public class Director {
         return builder.getHero();
     }
 
-    public static Hero createHunter(String name){
+    public static Hero createHunter(String name) {
         HeroBuilder builder = buildNew(name);
         builder.setAttack(25);
         builder.setDefense(20);

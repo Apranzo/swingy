@@ -16,37 +16,38 @@ public class SelectHeroController {
     private SelectHeroView view;
     private Game game;
 
-    public SelectHeroController(SelectHeroView view){
+    public SelectHeroController(SelectHeroView view) {
         this.view = view;
         game = Game.getInstance();
     }
 
-    public void onListElementSelected(int idx){
+    public void onListElementSelected(int idx) {
         Hero hero = DataBase.selectHeroById(idx + 1);
         view.updateInfo(hero.toString());
     }
 
-    public String[] getListData(){
+    public String[] getListData() {
         ArrayList<String> list = DataBase.selectAll();
         String[] listArr = new String[list.size()];
         listArr = list.toArray(listArr);
         return listArr;
     }
 
-    public void onSelectButtonPressed(int idx){
+    public void onSelectButtonPressed(int idx) {
         Hero hero;
         try {
             hero = DataBase.selectHeroById(idx + 1);
             hero.validateHero();
-        } catch (HeroValidationException e){
+        } catch (HeroValidationException e) {
             view.showErrorMessage(e.getMessage());
             return;
         }
+
         game.initGame(hero);
         view.openGame();
     }
 
-    public void onCreateButtonPressed(){
+    public void onCreateButtonPressed() {
         view.openCreateHero();
     }
 }

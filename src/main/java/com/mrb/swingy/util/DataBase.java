@@ -8,46 +8,45 @@ import com.mrb.swingy.model.character.HeroBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by chvs on 22.06.2018.
  */
 public class DataBase {
-    public static final String DATA_BASE_URL = "jdbc:sqlite:heroes.db";
+    private static final String DATA_BASE_URL = "jdbc:sqlite:heroes.db";
     private static Connection connection;
 
-    public static void connect(){
+    public static void connect() {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(DATA_BASE_URL);
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
         connection = conn;
     }
 
-    public static void close(){
+    public static void close() {
         try {
             if (connection != null)
                 connection.close();
             connection = null;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static Connection getConnection(){
+    private static Connection getConnection() {
         if (connection == null)
             connect();
         return connection;
     }
 
-    public static int insert(String name, String className, int level, int xp, int attack, int defense, int hp){
+    public static int insert(String name, String className, int level, int xp, int attack, int defense, int hp) {
         String sqlQuery = "INSERT INTO heroes(name, class, level, xp, attack, defense, hp) VALUES(?, ?, ?, ?, ?, ?, ?)";
         int id = 0;
-        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)) {
             pstmt.setString(1, name);
             pstmt.setString(2, className);
             pstmt.setInt(3, level);
@@ -61,33 +60,33 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery("SELECT seq FROM sqlite_sequence WHERE name=\"heroes\"");
             if (rs.next())
                 id = rs.getInt("seq");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return id;
     }
 
-    public static ArrayList<String> selectAll(){
+    public static ArrayList<String> selectAll() {
         String sqlQuery = "SELECT * FROM heroes";
         ArrayList<String> arrayList = new ArrayList<>();
 
         try (Statement stmt = getConnection().createStatement();
-             ResultSet rs = stmt.executeQuery(sqlQuery)){
-            for (int i = 1; rs.next(); i++){
+             ResultSet rs = stmt.executeQuery(sqlQuery)) {
+            for (int i = 1; rs.next(); i++) {
                 arrayList.add(String.format("%d. %s (%s)", i, rs.getString("name"), rs.getString("class")));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return arrayList;
     }
 
-    public static Hero selectHeroById(int id){
+    public static Hero selectHeroById(int id) {
         String sqlQuery = "SELECT * FROM heroes WHERE id = ?";
         Hero hero = null;
 
-        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
-            pstmt.setInt(1,id);
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)) {
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 HeroBuilder builder = new HeroBuilder();
@@ -109,18 +108,18 @@ public class DataBase {
 
                 hero = builder.getHero();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return hero;
     }
 
-    public static void updateHero(Hero hero){
+    public static void updateHero(Hero hero) {
         String sqlQuery = "UPDATE heroes SET level = ?, xp = ?, attack = ?, defense = ?, hp = ? , " +
                 "weapon_name = ?, weapon_value = ?, helm_name = ?, helm_value = ?, armor_name = ?, armor_value = ? " +
                 "WHERE id = ?";
 
-        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)){
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)) {
             pstmt.setInt(1, hero.getLevel());
             pstmt.setInt(2, hero.getExperience());
             pstmt.setInt(3, hero.getAttack());
@@ -143,7 +142,7 @@ public class DataBase {
             pstmt.setInt(12, hero.getId());
 
             pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }

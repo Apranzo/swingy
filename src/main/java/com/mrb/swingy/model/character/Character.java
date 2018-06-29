@@ -30,16 +30,16 @@ public abstract class Character {
         this.hitPoints = hitPoints;
     }
 
-    private void attack(Character opponent){
-        if (this.attack > opponent.defense){
+    private void attack(Character opponent) {
+        if (this.attack > opponent.defense) {
             opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
-        } else if (ThreadLocalRandom.current().nextInt(0, 10) <= 2){
+        } else if (ThreadLocalRandom.current().nextInt(0, 10) <= 2) {
             opponent.setHitPoints(opponent.getHitPoints() - this.attack);
         }
     }
 
-    public boolean fight(Character opponent){
-        while (opponent.getHitPoints() > 0 && this.getHitPoints() > 0){
+    public boolean fight(Character opponent) {
+        while (opponent.getHitPoints() > 0 && this.getHitPoints() > 0) {
             this.attack(opponent);
             opponent.attack(this);
         }

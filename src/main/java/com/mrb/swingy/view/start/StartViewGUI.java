@@ -13,9 +13,8 @@ import java.awt.event.ActionListener;
 /**
  * Created by chvs on 18.06.2018.
  */
-public class StartViewGUI extends JPanel implements StartView{
+public class StartViewGUI extends JPanel implements StartView {
 
-    private JLabel windowLabel = new JLabel("Start");
     private JButton createHeroButton = new JButton("Create Hero");
     private JButton selectHeroButton = new JButton("Select Hero");
     private JButton switchViewButton = new JButton("Switch to console");
@@ -24,21 +23,20 @@ public class StartViewGUI extends JPanel implements StartView{
 
     @Override
     public void start() {
-        System.out.println("Start View GUI");
         controller = new StartController(this);
 
         buildUI();
     }
 
-    private void buildUI(){
+    private void buildUI() {
         Main.getFrame().setTitle("Start");
         this.setLayout(new GridBagLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         this.add(createHeroButton, gbc);
         this.add(selectHeroButton, gbc);

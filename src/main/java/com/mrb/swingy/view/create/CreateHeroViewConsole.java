@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Created by chvs on 18.06.2018.
  */
-public class CreateHeroViewConsole implements CreateHeroView{
+public class CreateHeroViewConsole implements CreateHeroView {
 
     private CreateHeroController controller;
 
@@ -28,25 +28,24 @@ public class CreateHeroViewConsole implements CreateHeroView{
         System.out.println("Enter name:");
         String name = scanner.nextLine();
         System.out.println("Classes: attack  defense    hp\n" +
-                            "Warrior    40      20      100\n" +
-                            "Shaman     30      15      90\n" +
-                            "Priest     25      25      90\n" +
-                            "Paladin    40      30      120\n" +
-                            "Mage       45      10      80\n" +
-                            "Hunter     25      20      110\n" +
-                            "Enter class name: ");
+                "Warrior    40      20      100\n" +
+                "Shaman     30      15      90\n" +
+                "Priest     25      25      90\n" +
+                "Paladin    40      30      120\n" +
+                "Mage       45      10      80\n" +
+                "Hunter     25      20      110\n" +
+                "Enter class name: ");
         String heroClass = scanner.nextLine();
 
         System.out.println("CREATE - to create hero with previously entered Name and Class");
         System.out.println("Command (CREATE):");
-        while (scanner.hasNext()){
+        while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
-            if ("create".equalsIgnoreCase(input)){
+            if ("create".equalsIgnoreCase(input)) {
                 controller.onCreateButtonPressed(name, heroClass);
                 break;
-            }
-            else {
+            } else {
                 System.out.println("Unknown command");
             }
         }

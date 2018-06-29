@@ -5,8 +5,8 @@ package com.mrb.swingy.model.character;
  */
 public abstract class HeroFactory {
 
-    public static Hero newHero(String name, String heroClass){
-        switch (heroClass.toUpperCase()){
+    public static Hero newHero(String name, String heroClass) {
+        switch (heroClass.toUpperCase()) {
             case "WARRIOR":
                 return Director.createWarrior(name);
             case "SHAMAN":
