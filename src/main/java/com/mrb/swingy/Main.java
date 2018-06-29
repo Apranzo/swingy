@@ -32,7 +32,7 @@ public class Main {
         if (frame == null) {
             frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setSize(500, 500);
+            frame.setSize(500, 400);
         }
         return frame;
     }
@@ -54,7 +54,6 @@ public class Main {
     }
 
     public static void closeConnections(){
-        System.out.println("Close connections!");
         DataBase.close();
         if (scanner != null)
             scanner.close();

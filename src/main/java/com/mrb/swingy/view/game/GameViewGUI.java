@@ -18,7 +18,7 @@ public class GameViewGUI extends JPanel implements GameView {
     private String[] directions = {"North", "East", "South", "West"};
     private JComboBox<String> directionsComboBox = new JComboBox<>(directions);
     private JButton moveButton = new JButton("Move");
-    private JButton switchButton = new JButton("Switch");
+    private JButton switchButton = new JButton("Switch to console");
 
     private JEditorPane infoPane = new JEditorPane();
     private JEditorPane mapPane = new JEditorPane();
@@ -45,9 +45,9 @@ public class GameViewGUI extends JPanel implements GameView {
 
         infoPane.setEditable(false);
         infoPane.setText("Select hero to see information");
-        infoPane.setPreferredSize(new Dimension(300, 300));
+        infoPane.setPreferredSize(new Dimension(220, 190));
         infoPane.setMinimumSize(new Dimension(200, 200));
-        this.add(infoPane);
+        this.add(infoPane, gbc);
         gbc.insets = new Insets(5,5,5,5);
 
         mapPane.setEditable(false);
@@ -55,7 +55,6 @@ public class GameViewGUI extends JPanel implements GameView {
         JScrollPane mapScroll = new JScrollPane(mapPane);
         mapScroll.setPreferredSize(new Dimension(300, 300));
         mapScroll.setMinimumSize(new Dimension(200, 200));
-        this.add(mapScroll);
 
         directionsComboBox.setSelectedIndex(0);
         this.add(directionsComboBox, gbc);

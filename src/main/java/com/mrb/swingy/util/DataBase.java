@@ -22,7 +22,6 @@ public class DataBase {
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(DATA_BASE_URL);
-            System.out.println("Connection to SQLite has been established.");
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
@@ -34,7 +33,6 @@ public class DataBase {
             if (connection != null)
                 connection.close();
             connection = null;
-            System.out.println("Connection to SQLite has been closed.");
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }

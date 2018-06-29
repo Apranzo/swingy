@@ -21,7 +21,6 @@ public class CreateHeroController {
     }
 
     public void onCreateButtonPressed(String name, String heroClass){
-        System.out.println("Controller: " + name + " " + heroClass);
         Hero hero;
         try {
             hero = HeroFactory.newHero(name, heroClass);

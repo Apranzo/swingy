@@ -59,10 +59,10 @@ public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
         JScrollPane infoScroll = new JScrollPane(infoPane);
         infoScroll.setPreferredSize(new Dimension(200, 200));
         infoScroll.setMinimumSize(new Dimension(150, 150));
-        this.add(infoScroll);
+        this.add(infoScroll, gbc);
 
-        this.add(selectButton);
-        this.add(createButton);
+        this.add(selectButton, gbc);
+        this.add(createButton, gbc);
         selectButton.setEnabled(false);
 
         this.setVisible(true);

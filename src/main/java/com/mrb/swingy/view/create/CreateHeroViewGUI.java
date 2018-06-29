@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class CreateHeroViewGUI extends JPanel implements CreateHeroView{
 
     private JLabel heroNameLabel = new JLabel("Hero name:");
-    private JTextField heroNameField = new JTextField("Default hero");
+    private JTextField heroNameField = new JTextField(10);
     private JButton createHeroButton = new JButton("Create Hero");
     private String[] heroClasses = {"Warrior", "Shaman", "Priest", "Paladin", "Mage", "Hunter"};
     private JComboBox<String> classesComboBox = new JComboBox<>(heroClasses);
