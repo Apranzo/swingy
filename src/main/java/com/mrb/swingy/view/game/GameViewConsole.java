@@ -16,7 +16,6 @@ public class GameViewConsole implements GameView {
 
     @Override
     public void start() {
-        System.out.println("Game View Console");
         controller = new GameController(this);
 
         controller.onStart();
@@ -24,16 +23,20 @@ public class GameViewConsole implements GameView {
 
     @Override
     public void update(Game game) {
+        System.out.println("----------INFO----------");
         System.out.println(game.getHero().toString() +
                 "Position: " + "(" + game.getHeroCoord().getX() +
                 "," + game.getHeroCoord().getY() + ")");
+        System.out.println("------------------------");
         getUserInput();
     }
 
     private void getUserInput() {
         Scanner scanner = Main.getScanner();
-        System.out.println("Command(MAP, NORTH, EAST, SOUTH, WEST, SWITCH):");
-        while (scanner.hasNext()) {
+        System.out.println("NORTH, EAST, SOUTH, WEST - to move to this direction");
+        System.out.println("SWITCH - to switch to GUI view");
+        System.out.println("Commands (NORTH, EAST, SOUTH, WEST, SWITCH):");
+        while (scanner != null && scanner.hasNext()) {
             String input = scanner.nextLine();
 
             if ("map".equalsIgnoreCase(input)) {
@@ -87,7 +90,11 @@ public class GameViewConsole implements GameView {
     @Override
     public void getVillainCollisionInput() {
         Scanner scanner = Main.getScanner();
-        System.out.println("Command(FIGHT, RUN):");
+        System.out.println();
+        System.out.println("You moved to position occupied by villain");
+        System.out.println("FIGHT - to fight with villain");
+        System.out.println("RUN - to run, 50% chance to move to the previous position");
+        System.out.println("Commands (FIGHT, RUN):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
 
@@ -106,8 +113,11 @@ public class GameViewConsole implements GameView {
     @Override
     public boolean replaceArtifact(String replaceMessage) {
         Scanner scanner = Main.getScanner();
+        System.out.println();
         System.out.println("Would you like to replace " + replaceMessage + "?");
-        System.out.println("Command(LEAVE, REPLACE):");
+        System.out.println("LEAVE - to leave your artifact");
+        System.out.println("REPLACE - to replace by new artifact");
+        System.out.println("Commands (LEAVE, REPLACE):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
 

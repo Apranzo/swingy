@@ -22,7 +22,6 @@ public class SelectHeroController {
     }
 
     public void onListElementSelected(int idx){
-        System.out.println("controller index - " + idx);
         Hero hero = DataBase.selectHeroById(idx + 1);
         view.updateInfo(hero.toString());
     }
@@ -35,8 +34,6 @@ public class SelectHeroController {
     }
 
     public void onSelectButtonPressed(int idx){
-        System.out.println("controller selected index - " + idx);
-
         Hero hero;
         try {
             hero = DataBase.selectHeroById(idx + 1);

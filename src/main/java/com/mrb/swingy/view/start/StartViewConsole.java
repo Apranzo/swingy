@@ -16,11 +16,15 @@ public class StartViewConsole implements StartView{
 
     @Override
     public void start() {
-        System.out.println("Start View Console");
         controller = new StartController(this);
+        System.out.println("You are in console RPG game, enter available commands to play.");
 
         Scanner scanner = Main.getScanner();
-        System.out.println("Command(CREATE, SELECT, SWITCH):");
+        System.out.println();
+        System.out.println("CREATE - to create hero");
+        System.out.println("SELECT - to select already created hero");
+        System.out.println("SWITCH - to switch to GUI view");
+        System.out.println("Commands (CREATE, SELECT, SWITCH):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
 

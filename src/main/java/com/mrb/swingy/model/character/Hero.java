@@ -59,7 +59,7 @@ public class Hero extends Character {
         Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(this);
         if (constraintViolations.size() != 0){
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Hero validation\nErrors: ");
+            stringBuilder.append("Hero validation error(s): ");
             stringBuilder.append(constraintViolations.size());
             stringBuilder.append("\n");
             for (ConstraintViolation<Hero> cv : constraintViolations) {
@@ -105,7 +105,6 @@ public class Hero extends Character {
 
     public void addExperience(int addXP){
         int nextLevel = (level + 1) * 1000 + level * level * 450;
-        System.out.println("Next level: " + nextLevel);
 
         if (experience + addXP >= nextLevel)
             levelUp();

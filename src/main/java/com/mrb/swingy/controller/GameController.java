@@ -70,7 +70,8 @@ public class GameController {
             villainCollision();
         }
 
-        view.update(game);
+        if (game.getHero().getHitPoints() > 0)
+            view.update(game);
     }
 
     private void winGame(){
@@ -103,25 +104,21 @@ public class GameController {
     private void setArtifact(Artifact artifact){
         if (artifact != null)
         {
-            System.out.println("Artifact!!!");
             if (artifact instanceof Weapon) {
                 if (game.getHero().getWeapon() == null || view.replaceArtifact("your weapon: " + game.getHero().getWeapon() + ", found: " + artifact)){
                     game.getHero().equipWeapon((Weapon) artifact);
-                    System.out.println("replaced");
+                    view.showMessage("You equipped new weapon: " + artifact);
                 }
-                System.out.println("Weapon");
             } else if (artifact instanceof Helm){
                 if (game.getHero().getHelm() == null || view.replaceArtifact("your helmet: " + game.getHero().getHelm() + ", found: " + artifact)){
                     game.getHero().equipHelm((Helm) artifact);
-                    System.out.println("replaced");
+                    view.showMessage("You equipped new helm: " + artifact);
                 }
-                System.out.println("Helm");
             } else if (artifact instanceof Armor){
                 if (game.getHero().getArmor() == null || view.replaceArtifact("your armor: " + game.getHero().getArmor() + ", found: " + artifact)){
                     game.getHero().equipArmor((Armor) artifact);
-                    System.out.println("replaced");
+                    view.showMessage("You equipped new armor: " + artifact);
                 }
-                System.out.println("Armor");
             }
         }
     }

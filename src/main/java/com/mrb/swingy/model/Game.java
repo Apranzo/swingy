@@ -91,12 +91,12 @@ public class Game {
         else if (rand > 98)
             return -1;
 
-        System.out.println("Villain: " + villain.getAttack() + " " + villain.getDefense() + " " + villain.getHitPoints());
         return hero.fight(villain) ? xp : -1;
     }
 
     private void putHero(){
         heroCoord = new Point(mapSize / 2, mapSize / 2);
+        map[heroCoord.getY()][heroCoord.getX()] = false;
     }
 
     public int getMapSize() {

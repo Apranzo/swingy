@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Character {
 
     @NotNull(message = "Name cannot be null")
-    @Size(min = 2, message = "Name length should not be less than 2")
+    @Size(min = 2, max = 16, message = "Name length should not be less than 2 or greater than 16")
     protected String name;
 
     @Min(value = 0, message = "Attack should not be less than 0")
@@ -32,10 +32,8 @@ public abstract class Character {
 
     private void attack(Character opponent){
         if (this.attack > opponent.defense){
-            System.out.println(opponent.getName() + " attacked");
             opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
         } else if (ThreadLocalRandom.current().nextInt(0, 10) <= 2){
-            System.out.println(opponent.getName() + " attacked by LUCK");
             opponent.setHitPoints(opponent.getHitPoints() - this.attack);
         }
     }

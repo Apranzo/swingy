@@ -17,7 +17,6 @@ public class SelectHeroViewConsole implements SelectHeroView {
 
     @Override
     public void start() {
-        System.out.println("Select Hero View Console");
         controller = new SelectHeroController(this);
 
         getInput();
@@ -27,7 +26,11 @@ public class SelectHeroViewConsole implements SelectHeroView {
         Scanner scanner = Main.getScanner();
         System.out.println("Available heroes: ");
         printHeroes(controller.getListData());
-        System.out.println("Command(CREATE, NUMBER, SELECT):");
+        System.out.println();
+        System.out.println("CREATE - to create hero");
+        System.out.println("NUMBER - enter number of available hero to see full information");
+        System.out.println("SELECT - enter select after entering number");
+        System.out.println("Commands (CREATE, NUMBER, SELECT):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
 

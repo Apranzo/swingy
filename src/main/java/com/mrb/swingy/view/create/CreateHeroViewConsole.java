@@ -15,7 +15,6 @@ public class CreateHeroViewConsole implements CreateHeroView{
 
     @Override
     public void start() {
-        System.out.println("Start Create Hero Console");
         controller = new CreateHeroController(this);
 
         getUserInput();
@@ -38,7 +37,8 @@ public class CreateHeroViewConsole implements CreateHeroView{
                             "Enter class name: ");
         String heroClass = scanner.nextLine();
 
-        System.out.println("Command(CREATE):");
+        System.out.println("CREATE - to create hero with previously entered Name and Class");
+        System.out.println("Command (CREATE):");
         while (scanner.hasNext()){
             String input = scanner.nextLine();
 
