@@ -5,7 +5,7 @@ package com.mrb.swingy.model.artifact;
  */
 public abstract class Artifact {
 
-    protected int points;
+    private int points;
     protected String name;
 
     public Artifact(String name, int points) {

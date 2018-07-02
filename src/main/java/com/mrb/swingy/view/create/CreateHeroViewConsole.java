@@ -27,7 +27,7 @@ public class CreateHeroViewConsole implements CreateHeroView {
         System.out.println("To create hero enter his name and class.");
         System.out.println("Enter name:");
         String name = scanner.nextLine();
-        System.out.println("Classes: attack  defense    hp\n" +
+        System.out.println("Classes: attack  defense   hp\n" +
                 "Warrior    40      20      100\n" +
                 "Shaman     30      15      90\n" +
                 "Priest     25      25      90\n" +

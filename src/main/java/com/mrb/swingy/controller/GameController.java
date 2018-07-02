@@ -125,6 +125,7 @@ public class GameController {
     public void onFight() {
         Villain villain = game.generateVillain();
         int xp = game.fightResult(villain);
+
         if (xp >= 0) {
             view.showMessage("You win, and got " + xp + "xp.");
             addExperience(xp);

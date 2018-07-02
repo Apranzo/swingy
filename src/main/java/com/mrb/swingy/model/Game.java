@@ -73,7 +73,7 @@ public class Game {
     }
 
     private Artifact generateArtifact() {
-        int rand = ThreadLocalRandom.current().nextInt(0, 3);
+        int rand = ThreadLocalRandom.current().nextInt(0, 10);
 
         Artifact artifact = null;
         if (rand == 0)

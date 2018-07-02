@@ -33,10 +33,10 @@ public class GameViewGUI extends JPanel implements GameView {
         controller.onStart();
     }
 
-    private void buildUI(){
+    private void buildUI() {
         Main.getFrame().setTitle("Game");
         this.setLayout(new GridBagLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -47,7 +47,7 @@ public class GameViewGUI extends JPanel implements GameView {
         infoPane.setPreferredSize(new Dimension(220, 190));
         infoPane.setMinimumSize(new Dimension(200, 200));
         this.add(infoPane, gbc);
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         mapPane.setEditable(false);
         mapPane.setText("Map");
@@ -68,7 +68,7 @@ public class GameViewGUI extends JPanel implements GameView {
         moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onMove((String)directionsComboBox.getSelectedItem());
+                controller.onMove((String) directionsComboBox.getSelectedItem());
             }
         });
         switchButton.addActionListener(new ActionListener() {
@@ -122,7 +122,10 @@ public class GameViewGUI extends JPanel implements GameView {
     public void getVillainCollisionInput() {
         Object options[] = {"Fight", "Run"};
 
-        int result = JOptionPane.showOptionDialog(Main.getFrame(), "You moved to position occupied by villain", "Fight or run?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        int result = JOptionPane.showOptionDialog(Main.getFrame(),
+                "You moved to position occupied by villain",
+                "Fight or run?", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (result == JOptionPane.YES_OPTION)
             controller.onFight();
         else
@@ -133,7 +136,10 @@ public class GameViewGUI extends JPanel implements GameView {
     public boolean replaceArtifact(String replaceMessage) {
         Object options[] = {"Replace", "Leave"};
 
-        int result = JOptionPane.showOptionDialog(Main.getFrame(), "Would you like to replace " + replaceMessage + "?", "Replace or leave?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        int result = JOptionPane.showOptionDialog(Main.getFrame(),
+                "Would you like to replace " + replaceMessage + "?",
+                "Replace or leave?", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         return result == JOptionPane.YES_OPTION;
     }
 

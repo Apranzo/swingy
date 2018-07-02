@@ -18,6 +18,7 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView {
     private JTextField heroNameField = new JTextField(10);
     private JButton createHeroButton = new JButton("Create Hero");
     private String[] heroClasses = {"Warrior", "Shaman", "Priest", "Paladin", "Mage", "Hunter"};
+    private JLabel heroClass = new JLabel("Class:");
     private JComboBox<String> classesComboBox = new JComboBox<>(heroClasses);
     private JEditorPane infoPane = new JEditorPane();
 
@@ -46,17 +47,22 @@ public class CreateHeroViewGUI extends JPanel implements CreateHeroView {
         createHeroPanel.setVisible(true);
         this.add(createHeroPanel, gbc);
 
+        JPanel classPannel = new JPanel();
+        classPannel.add(heroClass);
         classesComboBox.setSelectedIndex(0);
-        this.add(classesComboBox, gbc);
+        classPannel.add(classesComboBox);
+        classPannel.setVisible(true);
+        this.add(classPannel, gbc);
 
         infoPane.setEditable(false);
-        infoPane.setText("           attack defense hp\n" +
+        infoPane.setFont(new Font("monospaced", Font.PLAIN, 12));
+        infoPane.setText("         attack  defense   hp\n" +
                 "Warrior    40      20      100\n" +
-                "Shaman   30      15      90\n" +
-                "Priest       25      25      90\n" +
+                "Shaman     30      15      90\n" +
+                "Priest     25      25      90\n" +
                 "Paladin    40      30      120\n" +
                 "Mage       45      10      80\n" +
-                "Hunter    25      20      110\n");
+                "Hunter     25      20      110\n");
         infoPane.setPreferredSize(new Dimension(200, 120));
         infoPane.setMinimumSize(new Dimension(200, 120));
         this.add(infoPane, gbc);

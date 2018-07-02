@@ -24,8 +24,10 @@ public class SelectHeroViewConsole implements SelectHeroView {
 
     private void getInput() {
         Scanner scanner = Main.getScanner();
+
         System.out.println("Available heroes: ");
         printHeroes(controller.getListData());
+
         System.out.println();
         System.out.println("CREATE - to create hero");
         System.out.println("NUMBER - enter number of available hero to see full information");
