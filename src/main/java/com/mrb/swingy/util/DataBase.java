@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by chvs on 22.06.2018.
  */
 public class DataBase {
-    private static final String DATA_BASE_URL = "jdbc:sqlite:heroes.db";
+    private static final String DATA_BASE_URL = "jdbc:sqlite::resource:heroes.db";
     private static Connection connection;
 
     public static void connect() {
