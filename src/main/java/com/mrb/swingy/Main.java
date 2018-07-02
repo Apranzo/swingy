@@ -21,7 +21,6 @@ public class Main {
         }
 
         DataBase.connect();
-        frameListener();
 
         if (args[0].equals("console"))
             new StartViewConsole().start();
@@ -34,6 +33,7 @@ public class Main {
             frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.setSize(500, 400);
+            frameListener();
         }
         return frame;
     }
