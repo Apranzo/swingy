@@ -5,65 +5,31 @@ package com.mrb.swingy.model.character;
  */
 public class Director {
 
-    private static HeroBuilder buildNew(String name) {
-        HeroBuilder builder = new HeroBuilder();
-        builder.setName(name);
-        builder.setLevel(0);
-        builder.setExperience(0);
-        return builder;
+    private static Hero create(String name, int atack, int def, int points, String clazz) {
+        return Hero.builder().name(name).attack(atack).defense(def).hitPoints(points).heroClass(clazz).build();
     }
-
     public static Hero createWarrior(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(40);
-        builder.setDefense(20);
-        builder.setHitPoints(100);
-        builder.setHeroClass("Warrior");
-        return builder.getHero();
+        return create(name, 40, 20, 100, "Warrior");
     }
 
     public static Hero createShaman(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(30);
-        builder.setDefense(15);
-        builder.setHitPoints(90);
-        builder.setHeroClass("Shaman");
-        return builder.getHero();
+        return create(name, 30, 15, 90, "Shaman");
     }
 
     public static Hero createPriest(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(25);
-        builder.setDefense(25);
-        builder.setHitPoints(90);
-        builder.setHeroClass("Priest");
-        return builder.getHero();
+        return create(name, 25, 25, 90, "Priest");
     }
 
     public static Hero createPaladin(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(40);
-        builder.setDefense(30);
-        builder.setHitPoints(120);
-        builder.setHeroClass("Paladin");
-        return builder.getHero();
+        return create(name, 40, 30, 120, "Paladin");
     }
 
     public static Hero createMage(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(45);
-        builder.setDefense(10);
-        builder.setHitPoints(80);
-        builder.setHeroClass("Mage");
-        return builder.getHero();
+        return create(name, 45, 10, 80, "Mage");
+
     }
 
     public static Hero createHunter(String name) {
-        HeroBuilder builder = buildNew(name);
-        builder.setAttack(25);
-        builder.setDefense(20);
-        builder.setHitPoints(110);
-        builder.setHeroClass("Hunter");
-        return builder.getHero();
+        return create(name, 25, 20, 110, "Hunter");
     }
 }

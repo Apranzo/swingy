@@ -1,5 +1,10 @@
 package com.mrb.swingy.model.character;
 
+import com.mrb.swingy.model.Game;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,6 +13,9 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by chvs on 18.06.2018.
  */
+@AllArgsConstructor
+@Data
+@Builder
 public abstract class Character {
 
     @NotNull(message = "Name cannot be null")
@@ -23,19 +31,16 @@ public abstract class Character {
     @Min(value = 1, message = "Hit points should not be less than 1")
     protected int hitPoints;
 
-    public Character(String name, int attack, int defense, int hitPoints) {
-        this.name = name;
-        this.attack = attack;
-        this.defense = defense;
-        this.hitPoints = hitPoints;
-    }
-
     private void attack(Character opponent) {
         if (this.attack > opponent.defense) {
-            opponent.setHitPoints(opponent.getHitPoints() - (this.attack - opponent.defense));
-        } else if (ThreadLocalRandom.current().nextInt(0, 10) <= 2) {
-            opponent.setHitPoints(opponent.getHitPoints() - this.attack);
+            opponent.takeDamage(attack - defense);
+        } else if (Game.getRandom(0, 10) <= 2) {
+            opponent.takeDamage(attack);
         }
+    }
+
+    public void takeDamage(int atack) {
+        setHitPoints(hitPoints - Math.max(0, atack));
     }
 
     public boolean fight(Character opponent) {
