@@ -50,7 +50,7 @@ public class Hero extends Character {
         this.heroClass = heroClass;
     }
 
-    public void validateHero() throws HeroValidationException {
+    public Hero validateHero() throws HeroValidationException {
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -58,11 +58,11 @@ public class Hero extends Character {
         Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(this);
         if (constraintViolations.size() != 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append(String.format("Hero validation error(s): {}\n", constraintViolations.size()));
+            sb.append(String.format("Hero validation error(s): %d%n", constraintViolations.size()));
 //            sb.append(constraintViolations.size());
 //            sb.append("\n");
             for (ConstraintViolation<Hero> cv : constraintViolations) {
-                sb.append(String.format("property: {}, value: {}, message: {}\n",
+                sb.append(String.format("property: %s, value: %s, message: %s%n",
                                 cv.getPropertyPath(), cv.getInvalidValue(), cv.getMessage()));
 //                sb.append("property: ["); // TODO format string
 //                sb.append(cv.getPropertyPath());
@@ -74,6 +74,7 @@ public class Hero extends Character {
             }
             throw new HeroValidationException(sb.toString());
         }
+        return this;
     }
 
     public void equipWeapon(Weapon weapon) {
@@ -119,34 +120,34 @@ public class Hero extends Character {
         defense += level * 2;
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Name: ").append(name).append("\n");
-//        sb.append("Class: ").append(heroClass).append("\n");
-//        sb.append("Level: ").append(level).append("\n");
-//        sb.append("XP: ").append(experience).append("\n");
-//        sb.append("Attack: ").append(attack).append("\n");
-//        sb.append("Defense: ").append(defense).append("\n");
-//        sb.append("HP: ").append(hitPoints).append("\n");
-//
-//        sb.append("Weapon: ");
-//        if (weapon != null)
-//            sb.append(weapon.getName()).append(" (attack +").append(weapon.getPoints()).append(")\n");
-//        else
-//            sb.append(" no weapon\n");
-//
-//        sb.append("Helm: ");
-//        if (helm != null)
-//            sb.append(helm.getName()).append(" (hp +").append(helm.getPoints()).append(")\n");
-//        else
-//            sb.append(" no helmet\n");
-//
-//        sb.append("Armor: ");
-//        if (armor != null)
-//            sb.append(armor.getName()).append(" (defense +").append(armor.getPoints()).append(")\n");
-//        else
-//            sb.append(" no armor\n");
-//        return sb.toString();
-//    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append("\n");
+        sb.append("Class: ").append(heroClass).append("\n");
+        sb.append("Level: ").append(level).append("\n");
+        sb.append("XP: ").append(experience).append("\n");
+        sb.append("Attack: ").append(attack).append("\n");
+        sb.append("Defense: ").append(defense).append("\n");
+        sb.append("HP: ").append(hitPoints).append("\n");
+
+        sb.append("Weapon: ");
+        if (weapon != null)
+            sb.append(weapon.getName()).append(" (attack +").append(weapon.getPoints()).append(")\n");
+        else
+            sb.append(" no weapon\n");
+
+        sb.append("Helm: ");
+        if (helm != null)
+            sb.append(helm.getName()).append(" (hp +").append(helm.getPoints()).append(")\n");
+        else
+            sb.append(" no helmet\n");
+
+        sb.append("Armor: ");
+        if (armor != null)
+            sb.append(armor.getName()).append(" (defense +").append(armor.getPoints()).append(")\n");
+        else
+            sb.append(" no armor\n");
+        return sb.toString();
+    }
 }

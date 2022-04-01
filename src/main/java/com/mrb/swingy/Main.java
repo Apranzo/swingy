@@ -3,6 +3,7 @@ package com.mrb.swingy;
 import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.view.start.StartViewConsole;
 import com.mrb.swingy.view.start.StartViewGUI;
+import lombok.Cleanup;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

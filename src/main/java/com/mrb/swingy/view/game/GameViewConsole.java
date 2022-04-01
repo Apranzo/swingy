@@ -17,55 +17,45 @@ public class GameViewConsole implements GameView {
     @Override
     public void start() {
         controller = new GameController(this);
-
         controller.onStart();
     }
 
     @Override
     public void update(Game game) {
-        System.out.println("----------INFO----------");
-        System.out.println(game.getHero().toString() +
-                "Position: " + "(" + game.getHeroCoord().getX() +
-                "," + game.getHeroCoord().getY() + ")");
-        System.out.println("------------------------");
-
+        System.out.printf("""
+                ----------INFO----------
+                %s Position: (%d,%d)
+                ------------------------%n""", game.getHero().toString(), game.getHeroCoord().x, game.getHeroCoord().y);
         getUserInput();
     }
 
     private void getUserInput() {
         Scanner scanner = Main.getScanner();
-
-        System.out.println("NORTH, EAST, SOUTH, WEST - to move to this direction");
-        System.out.println("SWITCH - to switch to GUI view");
-        System.out.println("Commands (NORTH, EAST, SOUTH, WEST, SWITCH):");
+        System.out.println("""
+                NORTH, EAST, SOUTH, WEST - to move to this direction
+                SWITCH - to switch to GUI view
+                Commands (NORTH, EAST, SOUTH, WEST, SWITCH):""");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
-
-            if ("map".equalsIgnoreCase(input)) {
-                controller.onPrintMap();
-                break;
-            } else if ("north".equalsIgnoreCase(input) ||
-                    "east".equalsIgnoreCase(input) ||
-                    "south".equalsIgnoreCase(input) ||
-                    "west".equalsIgnoreCase(input)) {
-                controller.onMove(input);
-                break;
-            } else if ("switch".equalsIgnoreCase(input)) {
-                controller.onSwitchButtonPressed();
-                break;
-            } else {
-                System.out.println("Unknown command");
+            switch (input.toLowerCase()) {
+                case "map": controller.onPrintMap();
+                case "north":
+                case "east":
+                case "south":
+                case "west":
+                    controller.onMove(input);
+                case "switch": controller.onSwitchButtonPressed();
+                case default:  System.out.println("Unknown command");
             }
         }
     }
 
     @Override
     public void printMap(boolean[][] map, Point heroCoord) {
-        System.out.printf("MAP %dx%d", map.length, map.length);
-        System.out.println();
+        System.out.printf("MAP %dx%d%n", map.length, map.length);
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (heroCoord.getX() == j && heroCoord.getY() == i)
+                if (heroCoord.x == j && heroCoord.y == i)
                     System.out.print("H ");
                 else if (map[i][j])
                     System.out.print("* ");
@@ -91,23 +81,19 @@ public class GameViewConsole implements GameView {
     @Override
     public void getVillainCollisionInput() {
         Scanner scanner = Main.getScanner();
+        System.out.println("""
+        
+        You moved to position occupied by villain
+        FIGHT - to fight with villain
+        RUN - to run, 50% chance to move to the previous position
+        Commands (FIGHT, RUN):""");
 
-        System.out.println();
-        System.out.println("You moved to position occupied by villain");
-        System.out.println("FIGHT - to fight with villain");
-        System.out.println("RUN - to run, 50% chance to move to the previous position");
-        System.out.println("Commands (FIGHT, RUN):");
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
-
-            if ("fight".equalsIgnoreCase(input)) {
-                controller.onFight();
-                break;
-            } else if ("run".equalsIgnoreCase(input)) {
-                controller.onRun();
-                break;
-            } else {
-                System.out.println("Unknown command");
+            switch (input.toLowerCase()) {
+                case "fight": controller.onFight();
+                case "run": controller.onRun();
+                default: System.out.println("Unknown command");
             }
         }
     }
@@ -115,21 +101,16 @@ public class GameViewConsole implements GameView {
     @Override
     public boolean replaceArtifact(String replaceMessage) {
         Scanner scanner = Main.getScanner();
+        System.out.printf("""
+        %nWould you like to replace %s?
+        LEAVE - to leave your artifactREPLACE - to replace by new artifact
+        Commands (LEAVE, REPLACE):%n""", replaceMessage);
 
-        System.out.println();
-        System.out.println("Would you like to replace " + replaceMessage + "?");
-        System.out.println("LEAVE - to leave your artifact");
-        System.out.println("REPLACE - to replace by new artifact");
-        System.out.println("Commands (LEAVE, REPLACE):");
         while (scanner.hasNext()) {
-            String input = scanner.nextLine();
-
-            if ("leave".equalsIgnoreCase(input)) {
-                return false;
-            } else if ("replace".equalsIgnoreCase(input)) {
-                return true;
-            } else {
-                System.out.println("Unknown command");
+            switch (scanner.nextLine().toLowerCase()) {
+                case "leave": return false;
+                case "replace": return true;
+                default: System.out.println("Unknown command");
             }
         }
         return false;

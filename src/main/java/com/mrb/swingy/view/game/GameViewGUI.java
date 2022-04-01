@@ -85,7 +85,7 @@ public class GameViewGUI extends JPanel implements GameView {
         stringBuilder.append(String.format("MAP %dx%d\n", map.length, map.length));
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (heroCoord.getX() == j && heroCoord.getY() == i)
+                if (heroCoord.x == j && heroCoord.y == i)
                     stringBuilder.append("! ");
                 else if (map[i][j])
                     stringBuilder.append("* ");
@@ -100,8 +100,8 @@ public class GameViewGUI extends JPanel implements GameView {
     @Override
     public void update(Game game) {
         infoPane.setText(game.getHero().toString() +
-                "Position: " + "(" + game.getHeroCoord().getX() +
-                "," + game.getHeroCoord().getY() + ")");
+                "Position: " + "(" + game.getHeroCoord().x +
+                "," + game.getHeroCoord().y + ")");
 
         printMap(game.getMap(), game.getHeroCoord());
     }

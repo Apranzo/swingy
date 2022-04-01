@@ -8,6 +8,7 @@ import com.mrb.swingy.model.character.Character;
 import com.mrb.swingy.model.character.Hero;
 import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.Point;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by chvs on 19.06.2018.
  */
 @NoArgsConstructor
+@Getter
 public class Game {
 
     private static Game instance = null;
@@ -85,20 +87,16 @@ public class Game {
     public int fightResult(Character villain) {
         int xp = villain.getAttack() + villain.getDefense() + villain.getHitPoints();
         int rand = getRandom(0, 101);
-        switch (rand):
-            case
-
         if (rand < 3)
             return xp;
         else if (rand > 98)
             return -1;
-
         return hero.fight(villain) ? xp : -1;
     }
 
     private void putHero() {
         heroCoord = new Point(mapSize / 2, mapSize / 2);
-        map[heroCoord.getY()][heroCoord.getX()] = false;
+        map[heroCoord.y][heroCoord.x] = false;
     }
 
 }

@@ -7,9 +7,6 @@ import com.mrb.swingy.model.character.HeroFactory;
 import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.view.create.CreateHeroView;
 
-/**
- * Created by chvs on 19.06.2018.
- */
 public class CreateHeroController {
 
     private CreateHeroView view;
@@ -23,8 +20,7 @@ public class CreateHeroController {
     public void onCreateButtonPressed(String name, String heroClass) {
         Hero hero;
         try {
-            hero = HeroFactory.newHero(name, heroClass);
-            hero.validateHero();
+            hero = HeroFactory.newHero(name, heroClass).validateHero();
         } catch (IllegalArgumentException | HeroValidationException e) {
             view.showErrorMessage(e.getMessage());
             view.getUserInput();

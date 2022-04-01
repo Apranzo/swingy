@@ -11,6 +11,7 @@ import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.util.Point;
 import com.mrb.swingy.view.game.GameView;
 
+import javax.validation.constraints.NotNull;
 import java.util.Random;
 
 /**
@@ -18,13 +19,15 @@ import java.util.Random;
  */
 public class GameController {
 
-    private GameView view;
-    private Game game;
-    private Point previousPosition;
+    private final GameView view;
+    private final Game game;
+    private Hero hero;
+    private final Point previousPosition;
 
     public GameController(GameView view) {
         this.view = view;
         game = Game.getInstance();
+        hero = game.getHero();
         previousPosition = new Point(0, 0);
     }
 
@@ -37,25 +40,17 @@ public class GameController {
         view.update(game);
     }
 
-    public void onMove(String direction) {
-        int x = game.getHeroCoord().getX();
-        int y = game.getHeroCoord().getY();
-        previousPosition.setX(x);
-        previousPosition.setY(y);
+    public void onMove(@NotNull String direction) {
+        int x = game.getHeroCoord().x;
+        int y = game.getHeroCoord().y;
+        previousPosition.x = x;
+        previousPosition.y = y;
 
         switch (direction.toUpperCase()) {
-            case "NORTH":
-                y--;
-                break;
-            case "EAST":
-                x++;
-                break;
-            case "SOUTH":
-                y++;
-                break;
-            case "WEST":
-                x--;
-                break;
+            case "NORTH": y--;
+            case "EAST": x++;
+            case "SOUTH": y++;
+            case "WEST": x--;
         }
 
         if (x < 0 || y < 0 || x >= game.getMapSize() || y >= game.getMapSize()) {
@@ -63,14 +58,14 @@ public class GameController {
             return;
         }
 
-        game.getHeroCoord().setX(x);
-        game.getHeroCoord().setY(y);
+        game.getHeroCoord().x = x;
+        game.getHeroCoord().y = y;
 
         if (game.getMap()[y][x]) {
             villainCollision();
         }
 
-        if (game.getHero().getHitPoints() > 0)
+        if (hero.getHitPoints() > 0)
             view.update(game);
     }
 
@@ -82,7 +77,6 @@ public class GameController {
     }
 
     private void updateDataBase() {
-        Hero hero = game.getHero();
         DataBase.updateHero(hero);
     }
 
@@ -93,8 +87,8 @@ public class GameController {
     public void onRun() {
         if (new Random().nextBoolean()) {
             view.showMessage("You are lucky! And moved to previous position!");
-            game.getHeroCoord().setX(previousPosition.getX());
-            game.getHeroCoord().setY(previousPosition.getY());
+            game.getHeroCoord().x = previousPosition.x;
+            game.getHeroCoord().y = previousPosition.y;
         } else {
             view.showMessage("You have to fight");
             onFight();
@@ -102,21 +96,29 @@ public class GameController {
     }
 
     private void setArtifact(Artifact artifact) {
-        if (artifact != null) {
-            if (artifact instanceof Weapon) {
-                if (game.getHero().getWeapon() == null || view.replaceArtifact("your weapon: " + game.getHero().getWeapon() + ", found: " + artifact)) {
-                    game.getHero().equipWeapon((Weapon) artifact);
-                    view.showMessage("You equipped new weapon: " + artifact);
+        switch (artifact) {
+            case Weapon w -> {
+                if (null != hero.getWeapon()) {
+                        if (view.replaceArtifact("your weapon: " + hero.getWeapon() + ", found: " + w)) {
+                            hero.equipWeapon(w);
+                            view.showMessage("You equipped new weapon: " + w);
+                        }
+                    }
+            }
+            case Helm h    -> {
+                if (null != hero.getHelm()) {
+                    if (view.replaceArtifact("your helmet: " + hero.getHelm() + ", found: " + h)) {
+                        hero.equipHelm(h);
+                        view.showMessage("You equipped new helm: " + h);
+                    }
                 }
-            } else if (artifact instanceof Helm) {
-                if (game.getHero().getHelm() == null || view.replaceArtifact("your helmet: " + game.getHero().getHelm() + ", found: " + artifact)) {
-                    game.getHero().equipHelm((Helm) artifact);
-                    view.showMessage("You equipped new helm: " + artifact);
-                }
-            } else if (artifact instanceof Armor) {
-                if (game.getHero().getArmor() == null || view.replaceArtifact("your armor: " + game.getHero().getArmor() + ", found: " + artifact)) {
-                    game.getHero().equipArmor((Armor) artifact);
-                    view.showMessage("You equipped new armor: " + artifact);
+            }
+            case Armor a  -> {
+                if (null != hero.getHelm()) {
+                    if (view.replaceArtifact("your armor: " + hero.getArmor() + ", found: " + a)) {
+                        hero.equipArmor(a);
+                        view.showMessage("You equipped new armor: " + a);
+                    }
                 }
             }
         }
@@ -129,7 +131,7 @@ public class GameController {
         if (xp >= 0) {
             view.showMessage("You win, and got " + xp + "xp.");
             addExperience(xp);
-            game.getMap()[game.getHeroCoord().getY()][game.getHeroCoord().getX()] = false;
+            game.getMap()[game.getHeroCoord().y][game.getHeroCoord().x] = false;
             setArtifact(villain.getArtifact());
         } else {
             view.showMessage("Game over :(");
@@ -138,9 +140,9 @@ public class GameController {
     }
 
     private void addExperience(int addXP) {
-        int level = game.getHero().getLevel();
-        game.getHero().addExperience(addXP);
-        if (level != game.getHero().getLevel())
+        int level = hero.getLevel();
+        hero.addExperience(addXP);
+        if (level != hero.getLevel())
             view.showMessage("Level UP!\nHP, attack and defense were increased!");
     }
 
