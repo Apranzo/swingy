@@ -10,13 +10,9 @@ import com.mrb.swingy.model.character.Villain;
 import com.mrb.swingy.util.DataBase;
 import com.mrb.swingy.util.Point;
 import com.mrb.swingy.view.game.GameView;
-
-import javax.validation.constraints.NotNull;
+import lombok.NonNull;
 import java.util.Random;
 
-/**
- * Created by chvs on 19.06.2018.
- */
 public class GameController {
 
     private final GameView view;
@@ -40,9 +36,9 @@ public class GameController {
         view.update(game);
     }
 
-    public void onMove(@NotNull String direction) {
-        int x = game.getHeroCoord().x;
-        int y = game.getHeroCoord().y;
+    public void onMove(@NonNull String direction) {
+        int x = game.getX();
+        int y = game.getY();
         previousPosition.x = x;
         previousPosition.y = y;
 
@@ -95,34 +91,10 @@ public class GameController {
         }
     }
 
-    private void setArtifact(Artifact artifact) {
-        switch (artifact) {
-            case Weapon w -> {
-                if (null != hero.getWeapon()) {
-                        if (view.replaceArtifact("your weapon: " + hero.getWeapon() + ", found: " + w)) {
-                            hero.equipWeapon(w);
-                            view.showMessage("You equipped new weapon: " + w);
-                        }
-                    }
-            }
-            case Helm h    -> {
-                if (null != hero.getHelm()) {
-                    if (view.replaceArtifact("your helmet: " + hero.getHelm() + ", found: " + h)) {
-                        hero.equipHelm(h);
-                        view.showMessage("You equipped new helm: " + h);
-                    }
-                }
-            }
-            case Armor a  -> {
-                if (null != hero.getHelm()) {
-                    if (view.replaceArtifact("your armor: " + hero.getArmor() + ", found: " + a)) {
-                        hero.equipArmor(a);
-                        view.showMessage("You equipped new armor: " + a);
-                    }
-                }
-            }
-        }
+    private void setArtifact(Artifact a) {
+        a.equiping(hero, view);
     }
+
 
     public void onFight() {
         Villain villain = game.generateVillain();
@@ -131,8 +103,8 @@ public class GameController {
         if (xp >= 0) {
             view.showMessage("You win, and got " + xp + "xp.");
             addExperience(xp);
-            game.getMap()[game.getHeroCoord().y][game.getHeroCoord().x] = false;
-            setArtifact(villain.getArtifact());
+            game.getMap()[game.getY()][game.getX()] = false;
+            villain.getArtifact().equiping(hero, view);
         } else {
             view.showMessage("Game over :(");
             view.gameFinished();

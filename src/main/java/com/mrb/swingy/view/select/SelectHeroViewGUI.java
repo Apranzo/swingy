@@ -12,9 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by chvs on 22.06.2018.
- */
 public class SelectHeroViewGUI extends JPanel implements SelectHeroView {
 
     private JEditorPane infoPane = new JEditorPane();

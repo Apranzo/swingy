@@ -1,40 +1,30 @@
 package com.mrb.swingy.model.character;
 
-import com.mrb.swingy.model.Game;
+import com.mrb.swingy.util.Utils;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by chvs on 18.06.2018.
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 public abstract class Character {
 
-    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 16, message = "Name length should not be less than 2 or greater than 16")
     protected String name;
-
-    @Min(value = 0, message = "Attack should not be less than 0")
     protected int attack;
-
-    @Min(value = 0, message = "Defense should not be less than 0")
     protected int defense;
-
-    @Min(value = 1, message = "Hit points should not be less than 1")
     protected int hitPoints;
 
     private void attack(Character opponent) {
         if (this.attack > opponent.defense) {
             opponent.takeDamage(attack - defense);
-        } else if (Game.getRandom(0, 10) <= 2) {
+        } else if (Utils.getRandom(0, 10) <= 2) {
             opponent.takeDamage(attack);
         }
     }

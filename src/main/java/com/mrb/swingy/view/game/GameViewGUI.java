@@ -100,8 +100,8 @@ public class GameViewGUI extends JPanel implements GameView {
     @Override
     public void update(Game game) {
         infoPane.setText(game.getHero().toString() +
-                "Position: " + "(" + game.getHeroCoord().x +
-                "," + game.getHeroCoord().y + ")");
+                "Position: " + "(" + game.getX() +
+                "," + game.getY() + ")");
 
         printMap(game.getMap(), game.getHeroCoord());
     }

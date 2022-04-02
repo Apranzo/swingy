@@ -8,9 +8,6 @@ import com.mrb.swingy.view.select.SelectHeroView;
 
 import java.util.ArrayList;
 
-/**
- * Created by chvs on 22.06.2018.
- */
 public class SelectHeroController {
 
     private SelectHeroView view;

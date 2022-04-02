@@ -1,17 +1,26 @@
 package com.mrb.swingy.model.artifact;
 
-/**
- * Created by chvs on 18.06.2018.
- */
-public abstract sealed class Artifact permits Armor, Helm, Weapon{
+import com.mrb.swingy.model.character.Hero;
+import com.mrb.swingy.view.game.GameView;
+import lombok.AllArgsConstructor;
 
-    private int points;
+@AllArgsConstructor
+public abstract class Artifact {
+
     protected String name;
+    private int points;
 
-    public Artifact(String name, int points) {
-        this.name = name;
-        this.points = points;
+    public void equiping(Hero h, GameView view) {
+        if (!itIs(h)) {
+            if (view.replaceArtifact("your weapon: " + h.getWeapon() + ", found: " + this)) {
+                takeMe(h, view);
+            }
+        }
     }
+
+    public abstract void takeMe(Hero h, GameView view);
+
+    public abstract boolean itIs(Hero h);
 
     public int getPoints() {
         return points;

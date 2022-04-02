@@ -7,9 +7,6 @@ import com.mrb.swingy.util.Point;
 
 import java.util.Scanner;
 
-/**
- * Created by chvs on 19.06.2018.
- */
 public class GameViewConsole implements GameView {
 
     private GameController controller;
@@ -25,7 +22,7 @@ public class GameViewConsole implements GameView {
         System.out.printf("""
                 ----------INFO----------
                 %s Position: (%d,%d)
-                ------------------------%n""", game.getHero().toString(), game.getHeroCoord().x, game.getHeroCoord().y);
+                ------------------------%n""", game.getHero().toString(), game.getX(), game.getY());
         getUserInput();
     }
 
@@ -45,7 +42,7 @@ public class GameViewConsole implements GameView {
                 case "west":
                     controller.onMove(input);
                 case "switch": controller.onSwitchButtonPressed();
-                case default:  System.out.println("Unknown command");
+                default:  System.out.println("Unknown command");
             }
         }
     }

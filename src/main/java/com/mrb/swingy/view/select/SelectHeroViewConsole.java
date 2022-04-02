@@ -7,9 +7,6 @@ import com.mrb.swingy.view.game.GameViewConsole;
 
 import java.util.Scanner;
 
-/**
- * Created by chvs on 22.06.2018.
- */
 public class SelectHeroViewConsole implements SelectHeroView {
 
     private SelectHeroController controller;

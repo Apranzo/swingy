@@ -24,8 +24,7 @@ public class CreateHeroViewConsole implements CreateHeroView {
     public void getUserInput() {
         Scanner scanner = Main.getScanner();
 
-        System.out.println("To create hero enter his name and class.");
-        System.out.println("Enter name:");
+        System.out.println("To create hero enter his name and class.\nEnter name:");
         String name = scanner.nextLine();
         System.out.println("Classes: attack  defense   hp\n" +
                 "Warrior    40      20      100\n" +
@@ -36,19 +35,20 @@ public class CreateHeroViewConsole implements CreateHeroView {
                 "Hunter     25      20      110\n" +
                 "Enter class name: ");
         String heroClass = scanner.nextLine();
+        controller.onCreateButtonPressed(name, heroClass);
 
-        System.out.println("CREATE - to create hero with previously entered Name and Class");
-        System.out.println("Command (CREATE):");
-        while (scanner.hasNext()) {
-            String input = scanner.nextLine();
-
-            if ("create".equalsIgnoreCase(input)) {
-                controller.onCreateButtonPressed(name, heroClass);
-                break;
-            } else {
-                System.out.println("Unknown command");
-            }
-        }
+//        System.out.println("CREATE - to create hero with previously entered Name and Class");
+//        System.out.println("Command (CREATE):");
+//        while (scanner.hasNext()) {
+//            String input = scanner.nextLine();
+//
+//            if ("create".equalsIgnoreCase(input)) {
+//                controller.onCreateButtonPressed(name, heroClass);
+//                break;
+//            } else {
+//                System.out.println("Unknown command");
+//            }
+//        }
     }
 
     @Override

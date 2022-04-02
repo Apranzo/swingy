@@ -61,7 +61,6 @@ public class Main {
             scanner.close();
     }
 
-
     private static void frameListener() {
         getFrame().addWindowListener(new WindowAdapter() {
             @Override

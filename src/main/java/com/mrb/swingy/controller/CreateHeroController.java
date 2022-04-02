@@ -9,8 +9,8 @@ import com.mrb.swingy.view.create.CreateHeroView;
 
 public class CreateHeroController {
 
-    private CreateHeroView view;
-    private Game game;
+    private final CreateHeroView view;
+    private final Game game;
 
     public CreateHeroController(CreateHeroView view) {
         this.view = view;

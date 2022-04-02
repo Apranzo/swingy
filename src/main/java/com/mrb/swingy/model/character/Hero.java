@@ -6,19 +6,10 @@ import com.mrb.swingy.model.artifact.Helm;
 import com.mrb.swingy.model.artifact.Weapon;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
-//import lombok.*;
 
-import javax.validation.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-import java.util.logging.Level;
+import java.util.LinkedList;
+import java.util.List;
 
-/**
- * Created by chvs on 18.06.2018.
- */
-@SuperBuilder
 @Data
 public class Hero extends Character {
 
@@ -26,13 +17,10 @@ public class Hero extends Character {
     private Armor armor;
     private Helm helm;
 
-    @Min(value = 0, message = "Level should not be less than 0")
     private int level;
 
-    @Min(value = 0, message = "Experience should not be less than 0")
     private int experience;
 
-    @NotNull(message = "Hero class cannot be null")
     private String heroClass;
 
     private int id;
@@ -50,21 +38,30 @@ public class Hero extends Character {
         this.heroClass = heroClass;
     }
 
-    public Hero validateHero() throws HeroValidationException {
-        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+    private List<String> validate() {
+        List<String> err = new LinkedList<>();
+        if (level < 0) err.add("Level should not be less than 0");
+        if (experience < 0) err.add("Experience should not be less than 0");
+        if (heroClass == null) err.add("Hero class cannot be null");
+        if (name == null) err.add("Name cannot be null");
+        else if (name.length() < 2 || name.length() > 16) err.add("");
+        if (attack < 0) err.add("Attack should not be less than 0");
+        if (defense < 0) err.add("Defense should not be less than 0");
+        if (hitPoints < 1) err.add("Hit points should not be less than 1");
+        return err;
+    }
 
-        Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(this);
-        if (constraintViolations.size() != 0) {
+    public Hero validateHero() throws HeroValidationException {
+
+        List<String> err = validate();
+        if (err.size() != 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append(String.format("Hero validation error(s): %d%n", constraintViolations.size()));
-//            sb.append(constraintViolations.size());
+            sb.append(String.format("Hero validation error(s): %d%n", err.size()));
+//            sb.append(err.size());
 //            sb.append("\n");
-            for (ConstraintViolation<Hero> cv : constraintViolations) {
-                sb.append(String.format("property: %s, value: %s, message: %s%n",
-                                cv.getPropertyPath(), cv.getInvalidValue(), cv.getMessage()));
-//                sb.append("property: ["); // TODO format string
+            for (String s : err) {
+                sb.append(String.format("message: %s%n", s));
+//                sb.append("property: [");
 //                sb.append(cv.getPropertyPath());
 //                sb.append("], value: [");
 //                sb.append(cv.getInvalidValue());

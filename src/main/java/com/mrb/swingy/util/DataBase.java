@@ -4,14 +4,10 @@ import com.mrb.swingy.model.artifact.Armor;
 import com.mrb.swingy.model.artifact.Helm;
 import com.mrb.swingy.model.artifact.Weapon;
 import com.mrb.swingy.model.character.Hero;
-import com.mrb.swingy.model.character.HeroBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * Created by chvs on 22.06.2018.
- */
 public class DataBase {
     private static final String DATA_BASE_URL = "jdbc:sqlite::resource:heroes.db";
     private static Connection connection;
@@ -83,35 +79,49 @@ public class DataBase {
 
     public static Hero selectHeroById(int id) {
         String sqlQuery = "SELECT * FROM heroes WHERE id = ?";
-        Hero hero = null;
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(sqlQuery)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                HeroBuilder builder = new HeroBuilder();
-                builder.setId(rs.getInt("id"));
-                builder.setName(rs.getString("name"));
-                builder.setHeroClass(rs.getString("class"));
-                builder.setLevel(rs.getInt("level"));
-                builder.setExperience(rs.getInt("xp"));
-                builder.setAttack(rs.getInt("attack"));
-                builder.setDefense(rs.getInt("defense"));
-                builder.setHitPoints(rs.getInt("hp"));
+                return Hero.builder().id(rs.getInt("id"))
+                .name(rs.getString("name"))
+                .heroClass(rs.getString("class"))
+                .level(rs.getInt("level"))
+                .experience(rs.getInt("xp"))
+                .attack(rs.getInt("attack"))
+                .defense(rs.getInt("defense"))
+                .hitPoints(rs.getInt("hp"))
+                .weapon(getWeapon(rs.getString("weapon_name"), rs.getInt("weapon_value")))
+                .helm(getHelm(rs.getString("weapon_name"), rs.getInt("weapon_value")))
+                .armor(getArmor(rs.getString("armor_name"), rs.getInt("armor_value")))
+                .build();
 
-                if (rs.getString("weapon_name") != null)
-                    builder.setWeapon(new Weapon(rs.getString("weapon_name"), rs.getInt("weapon_value")));
-                if (rs.getString("helm_name") != null)
-                    builder.setHelm(new Helm(rs.getString("helm_name"), rs.getInt("helm_value")));
-                if (rs.getString("armor_name") != null)
-                    builder.setArmor(new Armor(rs.getString("armor_name"), rs.getInt("armor_value")));
-
-                hero = builder.getHero();
+//                if (rs.getString("weapon_name") != null)
+//                    builder.setWeapon(new Weapon(rs.getString("weapon_name"), rs.getInt("weapon_value")));
+//                if (rs.getString("helm_name") != null)
+//                    builder.setHelm(new Helm(rs.getString("helm_name"), rs.getInt("helm_value")));
+//                if (rs.getString("armor_name") != null)
+//                    builder.setArmor(new Armor(rs.getString("armor_name"), rs.getInt("armor_value")));
+//
+//                hero = builder.getHero();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return hero;
+        return null;
+    }
+
+    private static Weapon getWeapon(String name, Integer value) throws SQLException {
+        return name != null && value != null ? new Weapon(name, value) : null;
+    }
+
+    private static Helm getHelm(String name, Integer value) throws SQLException {
+        return name != null && value != null ? new Helm(name, value) : null;
+    }
+
+    private static Armor getArmor(String name, Integer value) throws SQLException {
+        return name != null && value != null ? new Armor(name, value) : null;
     }
 
     public static void updateHero(Hero hero) {
